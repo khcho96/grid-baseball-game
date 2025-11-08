@@ -1,21 +1,20 @@
-package controller;
+package main.controller;
 
-
-import service.GameService;
-import view.GameView;
+import main.GameService;
+import main.view.GameView;
 
 public class GameController {
 
     private static GameController isExist;
     private final GameService gameService;
 
-    private GameController(GameService gameService) {
+    private GameController(main.service.GameService gameService) {
         this.gameService = gameService;
     }
 
     public static GameController getInstance() {
         if (isExist == null) {
-            isExist = new GameController(new GameService());
+            isExist = new GameController(new main.service.GameService());
         }
         return isExist;
     }

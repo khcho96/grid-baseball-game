@@ -1,6 +1,6 @@
-package view;
+package main.view;
 
-import communicator.EventCommunicator;
+import main.communicator.EventCommunicator;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import main.application.Application;
 
 public class GameView extends JFrame {
 
@@ -17,6 +18,7 @@ public class GameView extends JFrame {
     private final JPanel gameTitlePanel = new JPanel();
     private final JPanel gameStatePanel = new JPanel();
     private final JPanel gameGridPanel = new JPanel();
+    private final JPanel gameResultPanel = new JPanel();
 
     private final EventCommunicator eventCommunicator = new EventCommunicator();
 
@@ -39,10 +41,14 @@ public class GameView extends JFrame {
     // gameStatePanel
     private int pitchesCount;
     private int outCount;
-    private final JLabel stateLabel = new JLabel("현재 투구수: " + pitchesCount + "    아웃: " + outCount);
+    private final JLabel stateLabel = new JLabel("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
+    private final JButton restartButton = new JButton("↩︎Restart");
 
     // gameGridPanel
     private final List<List<JButton>> gridButtons = new ArrayList<>();
+
+    // gameResultPanel
+    private final JLabel resultLabel = new JLabel();
 
     public GameView() {
         setTitle("격자 야구 게임"); // 프레임 제목 설정.
@@ -60,6 +66,7 @@ public class GameView extends JFrame {
         add(gameTitlePanel);
         add(gameStatePanel);
         add(gameGridPanel);
+        add(gameResultPanel);
 
         setVisible(true); // 프레임 보이기;
     }
@@ -87,9 +94,12 @@ public class GameView extends JFrame {
         titleLabel.setFont(new Font("돋움", Font.BOLD, 40));
 
         // state
-        stateLabel.setSize(950, 50);
+        stateLabel.setSize(700, 50);
         stateLabel.setLocation(350, 10);
         stateLabel.setFont(new Font("돋움", Font.PLAIN, 20));
+        restartButton.setSize(100, 40);
+        restartButton.setLocation(600, 10);
+        restartButton.setFont(new Font("돋움", Font.PLAIN, 20));
 
         // grid
         for (int i = 0; i < 5; i++) {
@@ -100,6 +110,11 @@ public class GameView extends JFrame {
                 gridButtons.get(i).add(jButton);
             }
         }
+
+        // result
+        resultLabel.setSize(950, 100);
+        resultLabel.setLocation(300, 10);
+        resultLabel.setFont(new Font("돋움", Font.BOLD, 30));
     }
 
     private void setPanel() {
@@ -122,6 +137,7 @@ public class GameView extends JFrame {
         gameStatePanel.setLocation(550, 50);
         gameStatePanel.setLayout(null);
         gameStatePanel.add(stateLabel);
+        gameStatePanel.add(restartButton);
 
         // grid
         gameGridPanel.setSize(500, 500);
@@ -132,6 +148,12 @@ public class GameView extends JFrame {
                 gameGridPanel.add(gridButtons.get(i).get(j));
             }
         }
+
+        // Result
+        gameResultPanel.setSize(950, 100);
+        gameResultPanel.setLocation(550, 600);
+        gameResultPanel.setLayout(null);
+        gameResultPanel.add(resultLabel);
     }
 
     private void setEvents() {
@@ -148,10 +170,19 @@ public class GameView extends JFrame {
                             if (result.equals("Out!⚾")) {
                                 outCount++;
                             }
-                            stateLabel.setText("현재 투구수: " + pitchesCount + "    아웃: " + outCount);
+                            stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
+                            if (outCount == 3) {
+                                resultLabel.setText("우승입니다!!🏆 투구 수: " + pitchesCount);
+                            }
                         }
                 );
             }
         }
+
+        restartButton.addActionListener(
+                e -> {
+                    Application.main(new String[]{});
+                }
+        );
     }
 }

@@ -1,8 +1,8 @@
-package service;
+package main.service;
 
-import domain.GridButtons;
-import domain.OutZone;
-import generator.RandomOutGenerator;
+import main.GridButtons;
+import main.OutZone;
+import main.RandomOutGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class GameService {
     private OutZone outZone;
 
     public void setGame() {
-        gridButtons = GridButtons.from(5);
+        gridButtons = main.domain.GridButtons.from(5);
         List<List<Integer>> outCoordinates = new ArrayList<>();
         while (outCoordinates.size() < 3) {
             List<Integer> outCoordinate = RandomOutGenerator.generateOutZoneCoordinate(5);
@@ -20,7 +20,7 @@ public class GameService {
                 outCoordinates.add(outCoordinate);
             }
         }
-        outZone = OutZone.of(outCoordinates);
+        outZone = main.domain.OutZone.of(outCoordinates);
     }
 
     public String processGridButtonEvent(int x, int y) {

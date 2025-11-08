@@ -1,4 +1,6 @@
-package domain;
+package main.domain;
+
+import main.OutZone;
 
 public class GridButton {
 

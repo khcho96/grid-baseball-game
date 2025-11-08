@@ -1,6 +1,6 @@
-package communicator;
+package main.communicator;
 
-import controller.GameController;
+import main.controller.GameController;
 
 public class EventCommunicator {
 

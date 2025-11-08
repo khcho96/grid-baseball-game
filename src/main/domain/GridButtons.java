@@ -1,22 +1,23 @@
-package domain;
+package main.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import main.OutZone;
 
 public class GridButtons {
 
-    private final List<List<GridButton>> gridButtons;
+    private final List<List<main.domain.GridButton>> gridButtons;
 
-    public GridButtons(List<List<GridButton>> gridButtons) {
+    public GridButtons(List<List<main.domain.GridButton>> gridButtons) {
         this.gridButtons = gridButtons;
     }
 
     public static GridButtons from(int size) {
-        List<List<GridButton>> gridButtons = new ArrayList<>();
+        List<List<main.domain.GridButton>> gridButtons = new ArrayList<>();
         for (int x = 0; x < size; x++) {
             gridButtons.add(new ArrayList<>());
             for (int y = 0; y < size; y++) {
-                gridButtons.get(x).add(new GridButton(x, y));
+                gridButtons.get(x).add(new main.domain.GridButton(x, y));
             }
         }
 
@@ -24,7 +25,7 @@ public class GridButtons {
     }
 
     public String computeEventResult(int x, int y, OutZone outZone) {
-        GridButton clickedButton = gridButtons.get(x).get(y);
+        main.domain.GridButton clickedButton = gridButtons.get(x).get(y);
         if (clickedButton.isOut(outZone)) {
             return "Out!⚾";
         }
@@ -34,7 +35,7 @@ public class GridButtons {
         return strikeCount + "S " + ballCount + "B";
     }
 
-    private int computeStrikeCount(int x, int y, OutZone outZone) {
+    private int computeStrikeCount(int x, int y, main.domain.OutZone outZone) {
         int strikeCount = 0;
 
         // 상
@@ -68,7 +69,7 @@ public class GridButtons {
         return strikeCount;
     }
 
-    private int computeBallCount(int x, int y, OutZone outZone) {
+    private int computeBallCount(int x, int y, main.domain.OutZone outZone) {
         int ballCount = 0;
 
         // 좌상
