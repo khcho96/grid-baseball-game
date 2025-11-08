@@ -1,5 +1,6 @@
 package main.view;
 
+import java.awt.event.ActionListener;
 import main.communicator.EventCommunicator;
 
 import java.awt.Font;
@@ -24,14 +25,14 @@ public class GameView extends JFrame {
 
     // gameRulePanel
     private final List<String> rules = List.of(
-            "🚥 게임 규칙 🚥",
-            "1. 총 3개의 아웃을 잡아 이닝을 마무리해야 한다.",
-            "2. 아웃은 N × N 보드의 N^2개 칸 중 서로 다른 세 칸에 무작위로 배치된다.",
-            "3. 칸을 선택하면 아웃 지점에 대한 힌트가 주어진다.",
-            "  1) 아웃 지점 선택 시: 아웃",
-            "  2) 아웃 지점과 상하좌우로 인접한 칸 선택 시: 스트라이크",
-            "  3) 아웃 지점과 대각선으로 인접한 칸 선택 시: 볼",
-            "4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것이 목표다."
+            " 🚥 게임 규칙 🚥",
+            " 1. 마무리 투수인 당신은 3아웃을 잡아 이 이닝을 끝내면, 팀을 우승으로 이끕니다.",
+            " 2. 아웃은 N × N 보드의 N^2개 칸 중 서로 다른 세 칸에 무작위로 배치됩니다.",
+            " 3. 칸을 선택하면 아웃 지점에 대한 힌트가 주어집니다.",
+            "   1) 아웃 지점 선택 시: 아웃",
+            "   2) 아웃 지점과 상하좌우로 인접한 칸 선택 시: 스트라이크",
+            "   3) 아웃 지점과 대각선으로 인접한 칸 선택 시: 볼",
+            " 4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것을 목표로 합니다."
     );
     private final List<JLabel> ruleLabels = new ArrayList<>();
 
@@ -41,6 +42,7 @@ public class GameView extends JFrame {
     // gameStatePanel
     private int pitchesCount;
     private int outCount;
+    private boolean gameOver = false;
     private final JLabel stateLabel = new JLabel("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
     private final JButton restartButton = new JButton("↩︎Restart");
 
@@ -77,13 +79,13 @@ public class GameView extends JFrame {
             ruleLabels.add(new JLabel(rules.get(i)));
 
             if (i == 0) {
-                ruleLabels.get(i).setSize(550, 30);
-                ruleLabels.get(i).setLocation(150, 10);
+                ruleLabels.get(i).setSize(600, 30);
+                ruleLabels.get(i).setLocation(200, 10);
                 ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 20));
                 continue;
             }
 
-            ruleLabels.get(i).setSize(550, 30);
+            ruleLabels.get(i).setSize(600, 30);
             ruleLabels.get(i).setLocation(0, 10 + i * 40);
             ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 15));
         }
@@ -119,7 +121,7 @@ public class GameView extends JFrame {
 
     private void setPanel() {
         // rule
-        gameRulePanel.setSize(550, 900);
+        gameRulePanel.setSize(600, 900);
         gameRulePanel.setLocation(0, 0);
         gameRulePanel.setLayout(null);
         for (JLabel ruleLabel : ruleLabels) {
@@ -164,6 +166,8 @@ public class GameView extends JFrame {
                 JButton button = gridButtons.get(x).get(y);
                 button.addActionListener(
                         e -> {
+                            if (gameOver) return;
+
                             String result = eventCommunicator.clickGridButton(finalX, finalY);
                             button.setText(result);
                             pitchesCount++;
@@ -173,8 +177,15 @@ public class GameView extends JFrame {
                             stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
                             if (outCount == 3) {
                                 resultLabel.setText("우승입니다!!🏆 투구 수: " + pitchesCount);
+                                gameOver = true;
+                                disableAllGridButtons();
+                            }
+
+                            for (ActionListener actionListener : button.getActionListeners()) {
+                                button.removeActionListener(actionListener);
                             }
                         }
+
                 );
             }
         }
@@ -184,5 +195,13 @@ public class GameView extends JFrame {
                     Application.main(new String[]{});
                 }
         );
+    }
+
+    private void disableAllGridButtons() {
+        for (List<JButton> gridButton : gridButtons) {
+            for (JButton button : gridButton) {
+                button.setEnabled(false);
+            }
+        }
     }
 }
