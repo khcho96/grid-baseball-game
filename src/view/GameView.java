@@ -144,6 +144,11 @@ public class GameView extends JFrame {
                         e -> {
                             String result = eventCommunicator.clickGridButton(finalX, finalY);
                             button.setText(result);
+                            pitchesCount++;
+                            if (result.equals("Out!⚾")) {
+                                outCount++;
+                            }
+                            stateLabel.setText("현재 투구수: " + pitchesCount + "    아웃: " + outCount);
                         }
                 );
             }

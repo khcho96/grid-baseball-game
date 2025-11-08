@@ -19,7 +19,6 @@ public class OutZone {
         return new OutZone(outZones);
     }
 
-
     public boolean contains(GridButton gridButton) {
         for (GridButton outZone : outZones) {
             if (outZone.equals(gridButton)) {
