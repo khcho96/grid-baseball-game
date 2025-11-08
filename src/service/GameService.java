@@ -13,10 +13,14 @@ public class GameService {
 
     public void setGame() {
         gridButtons = GridButtons.from(5);
-        List<Integer> outCoordinate1 = RandomOutGenerator.generateOutZoneCoordinate(5);
-        List<Integer> outCoordinate2 = RandomOutGenerator.generateOutZoneCoordinate(5);
-        List<Integer> outCoordinate3 = RandomOutGenerator.generateOutZoneCoordinate(5);
-        outZone = OutZone.of(outCoordinate1, outCoordinate2, outCoordinate3);
+        List<List<Integer>> outCoordinates = new ArrayList<>();
+        while (outCoordinates.size() < 3) {
+            List<Integer> outCoordinate = RandomOutGenerator.generateOutZoneCoordinate(5);
+            if (!outCoordinates.contains(outCoordinate)) {
+                outCoordinates.add(outCoordinate);
+            }
+        }
+        outZone = OutZone.of(outCoordinates);
     }
 
     public String processGridButtonEvent(int x, int y) {

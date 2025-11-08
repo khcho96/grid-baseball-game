@@ -1,5 +1,4 @@
 import controller.GameController;
-import service.GameService;
 
 public class Application {
 

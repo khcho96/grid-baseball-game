@@ -11,19 +11,20 @@ public class OutZone {
         this.outZones = outZone;
     }
 
-    public static OutZone of(List<Integer> outCoordinate1, List<Integer> outCoordinate2, List<Integer> outCoordinate3) {
+    public static OutZone of(List<List<Integer>> outCoordinates) {
         List<GridButton> outZones = new ArrayList<>();
-        outZones.add(new GridButton(outCoordinate1.get(0), outCoordinate1.get(1)));
-        outZones.add(new GridButton(outCoordinate2.get(0), outCoordinate2.get(1)));
-        outZones.add(new GridButton(outCoordinate3.get(0), outCoordinate3.get(1)));
-
+        for (List<Integer> outCoordinate : outCoordinates) {
+            outZones.add(new GridButton(outCoordinate.get(0), outCoordinate.get(1)));
+        }
         return new OutZone(outZones);
     }
 
 
     public boolean contains(GridButton gridButton) {
         for (GridButton outZone : outZones) {
-            return outZone.equals(gridButton);
+            if (outZone.equals(gridButton)) {
+                return true;
+            }
         }
         return false;
     }

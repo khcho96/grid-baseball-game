@@ -4,8 +4,6 @@ public class GridButton {
 
     private final int coordinateX;
     private final int coordinateY;
-    private int strikeCount;
-    private int ballCount;
 
     public GridButton(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
