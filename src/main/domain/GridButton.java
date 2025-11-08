@@ -1,7 +1,5 @@
 package main.domain;
 
-import main.OutZone;
-
 public class GridButton {
 
     private final int coordinateX;

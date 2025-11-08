@@ -1,6 +1,6 @@
 package main.controller;
 
-import main.GameService;
+import main.service.GameService;
 import main.view.GameView;
 
 public class GameController {

@@ -2,7 +2,6 @@ package main.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import main.OutZone;
 
 public class GridButtons {
 
