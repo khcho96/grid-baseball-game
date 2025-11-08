@@ -1,5 +1,7 @@
 package view;
 
+import communicator.EventCommunicator;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public class GameView extends JFrame {
     private final JPanel gameTitlePanel = new JPanel();
     private final JPanel gameStatePanel = new JPanel();
     private final JPanel gameGridPanel = new JPanel();
+
+    private final EventCommunicator eventCommunicator = new EventCommunicator();
 
     // gameRulePanel
     private final List<String> rules = List.of(
@@ -50,6 +54,7 @@ public class GameView extends JFrame {
 
         setComponents();
         setPanel();
+        setEvents(); // 이벤트 처리!
 
         add(gameRulePanel);
         add(gameTitlePanel);
@@ -57,6 +62,44 @@ public class GameView extends JFrame {
         add(gameGridPanel);
 
         setVisible(true); // 프레임 보이기;
+    }
+
+    private void setComponents() {
+        // rule
+        for (int i = 0; i < rules.size(); i++) {
+            ruleLabels.add(new JLabel(rules.get(i)));
+
+            if (i == 0) {
+                ruleLabels.get(i).setSize(550, 30);
+                ruleLabels.get(i).setLocation(150, 10);
+                ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 20));
+                continue;
+            }
+
+            ruleLabels.get(i).setSize(550, 30);
+            ruleLabels.get(i).setLocation(0, 10 + i * 40);
+            ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 15));
+        }
+
+        // title
+        titleLabel.setSize(950, 40);
+        titleLabel.setLocation(275, 10);
+        titleLabel.setFont(new Font("돋움", Font.BOLD, 40));
+
+        // state
+        stateLabel.setSize(950, 50);
+        stateLabel.setLocation(350, 10);
+        stateLabel.setFont(new Font("돋움", Font.PLAIN, 20));
+
+        // grid
+        for (int i = 0; i < 5; i++) {
+            gridButtons.add(new ArrayList<>());
+            for (int j = 0; j < 5; j++) {
+                JButton jButton = new JButton();
+                jButton.setFocusPainted(false); // 포커스 하이라이트 숨김
+                gridButtons.get(i).add(jButton);
+            }
+        }
     }
 
     private void setPanel() {
@@ -82,8 +125,8 @@ public class GameView extends JFrame {
 
         // grid
         gameGridPanel.setSize(500, 500);
-        gameGridPanel.setLocation(750,100);
-        gameGridPanel.setLayout(new GridLayout(5,5));
+        gameGridPanel.setLocation(750, 100);
+        gameGridPanel.setLayout(new GridLayout(5, 5));
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 gameGridPanel.add(gridButtons.get(i).get(j));
@@ -91,45 +134,19 @@ public class GameView extends JFrame {
         }
     }
 
-    private void setComponents() {
-        // rule
-        for (int i = 0; i < rules.size(); i++) {
-            ruleLabels.add(new JLabel(rules.get(i)));
-
-            if (i == 0) {
-                ruleLabels.get(i).setSize(550, 30);
-                ruleLabels.get(i).setLocation(150, 10);
-                ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 20));
-                continue;
-            }
-
-            ruleLabels.get(i).setSize(550, 30);
-            ruleLabels.get(i).setLocation(0, 10 + i * 40);
-            ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 15));
-        }
-
-        // title
-        titleLabel.setSize(950,40);
-        titleLabel.setLocation(275,10);
-        titleLabel.setFont(new Font("돋움", Font.BOLD, 40));
-
-        // state
-        stateLabel.setSize(950, 50);
-        stateLabel.setLocation(350, 10);
-        stateLabel.setFont(new Font("돋움", Font.PLAIN, 20));
-
-        // grid
-        for (int i = 0; i < 5; i++) {
-            gridButtons.add(new ArrayList<>());
-            for (int j = 0; j < 5; j++) {
-                JButton jButton = new JButton();
-                jButton.setFocusPainted(false); // 포커스 하이라이트 숨김
-                gridButtons.get(i).add(jButton);
+    private void setEvents() {
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                int finalX = x;
+                int finalY = y;
+                JButton button = gridButtons.get(x).get(y);
+                button.addActionListener(
+                        e -> {
+                            String result = eventCommunicator.clickGridButton(finalX, finalY);
+                            button.setText(result);
+                        }
+                );
             }
         }
-    }
-
-    public static void main(String[] args) {
-        new GameView();
     }
 }
