@@ -1,5 +1,6 @@
 package main.view;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import main.communicator.EventCommunicator;
 
@@ -117,6 +118,7 @@ public class GameView extends JFrame {
         resultLabel.setSize(950, 100);
         resultLabel.setLocation(300, 10);
         resultLabel.setFont(new Font("돋움", Font.BOLD, 30));
+        resultLabel.setForeground(Color.BLUE);
     }
 
     private void setPanel() {
@@ -170,8 +172,10 @@ public class GameView extends JFrame {
 
                             String result = eventCommunicator.clickGridButton(finalX, finalY);
                             button.setText(result);
+                            button.setForeground(Color.BLUE);
                             pitchesCount++;
                             if (result.equals("Out!⚾")) {
+                                button.setForeground(Color.RED);
                                 outCount++;
                             }
                             stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
@@ -181,11 +185,8 @@ public class GameView extends JFrame {
                                 disableAllGridButtons();
                             }
 
-                            for (ActionListener actionListener : button.getActionListeners()) {
-                                button.removeActionListener(actionListener);
-                            }
+                           disableOneGridButton(button);
                         }
-
                 );
             }
         }
@@ -200,8 +201,14 @@ public class GameView extends JFrame {
     private void disableAllGridButtons() {
         for (List<JButton> gridButton : gridButtons) {
             for (JButton button : gridButton) {
-                button.setEnabled(false);
+                disableOneGridButton(button);
             }
+        }
+    }
+
+    private void disableOneGridButton(JButton button) {
+        for (ActionListener actionListener : button.getActionListeners()) {
+            button.removeActionListener(actionListener);
         }
     }
 }
