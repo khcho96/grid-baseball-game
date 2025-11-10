@@ -29,9 +29,11 @@ public class GridButtons {
             return "Out!⚾";
         }
 
-        int strikeCount = computeStrikeCount(x, y, outZone);
-        int ballCount = computeBallCount(x, y, outZone);
-        return strikeCount + "S " + ballCount + "B";
+        String strikeCount = "<html><span style='color:#D2A641;'>" + computeStrikeCount(x, y, outZone) + "S </span>";
+        String ballCount = "<span style='color:#377E22;'>" + computeBallCount(x, y, outZone) + "B</span></html>";
+
+        return strikeCount + ballCount;
+
     }
 
     private int computeStrikeCount(int x, int y, main.domain.OutZone outZone) {
