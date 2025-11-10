@@ -1,5 +1,6 @@
 package main.controller;
 
+import main.dto.SizeDto;
 import main.service.GameService;
 import main.view.GameView;
 
@@ -19,12 +20,21 @@ public class GameController {
         return isExist;
     }
 
-    public void gameStart() {
-        new GameView();
-        gameService.setGame();
+    public void startGame() {
+        SizeDto size = gameService.setInitGame();
+        new GameView(size);
+    }
+
+    public void restartGame() {
+        SizeDto size = gameService.handleRestartGame();
+        new GameView(size);
     }
 
     public String transferGridButtonEvent(int x, int y) {
         return gameService.handleGridButtonEvent(x, y);
+    }
+
+    public SizeDto transferSizeInputEvent(String sizeInput) {
+        return gameService.handleSizeInputEvent(sizeInput);
     }
 }
