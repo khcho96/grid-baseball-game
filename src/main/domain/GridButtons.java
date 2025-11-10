@@ -5,18 +5,18 @@ import java.util.List;
 
 public class GridButtons {
 
-    private final List<List<main.domain.GridButton>> gridButtons;
+    private final List<List<GridButton>> gridButtons;
 
-    public GridButtons(List<List<main.domain.GridButton>> gridButtons) {
+    public GridButtons(List<List<GridButton>> gridButtons) {
         this.gridButtons = gridButtons;
     }
 
-    public static GridButtons from(int size) {
-        List<List<main.domain.GridButton>> gridButtons = new ArrayList<>();
-        for (int x = 0; x < size; x++) {
+    public static GridButtons from(Size size) {
+        List<List<GridButton>> gridButtons = new ArrayList<>();
+        for (int x = 0; x < size.getSize(); x++) {
             gridButtons.add(new ArrayList<>());
-            for (int y = 0; y < size; y++) {
-                gridButtons.get(x).add(new main.domain.GridButton(x, y));
+            for (int y = 0; y < size.getSize(); y++) {
+                gridButtons.get(x).add(new GridButton(x, y));
             }
         }
 
@@ -24,7 +24,7 @@ public class GridButtons {
     }
 
     public String computeEventResult(int x, int y, OutZone outZone) {
-        main.domain.GridButton clickedButton = gridButtons.get(x).get(y);
+        GridButton clickedButton = gridButtons.get(x).get(y);
         if (clickedButton.isOut(outZone)) {
             return "Out!⚾";
         }
