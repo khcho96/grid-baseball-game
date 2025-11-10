@@ -6,11 +6,11 @@ import java.util.Random;
 
 public class RandomOutGenerator {
 
-    public static List<Integer> generateOutZoneCoordinate(int max) {
+    public static List<Integer> generateOutZoneCoordinate(int size) {
         Random random = new Random();
         List<Integer> coordinate = new ArrayList<>();
-        coordinate.add(random.nextInt(max));
-        coordinate.add(random.nextInt(max));
+        coordinate.add(random.nextInt(size));
+        coordinate.add(random.nextInt(size));
 
         return coordinate;
     }
