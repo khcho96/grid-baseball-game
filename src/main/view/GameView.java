@@ -41,7 +41,7 @@ public class GameView extends JFrame {
     private final JLabel sizeInputLabel = new JLabel("격자 크기를 입력해주세요.(3~8) 입력 예) 5");
     private final JTextField sizeInputTextField = new JTextField();
     private final JButton sizeInputButton = new JButton("입력");
-    private final JLabel sizeInputErrorLabel = new JLabel();
+    private final JLabel sizeInputResultLabel = new JLabel();
 
     // gameTitlePanel
     private final JLabel titleLabel = new JLabel("⚾ 격자 야구 게임 🧢");
@@ -102,10 +102,9 @@ public class GameView extends JFrame {
         sizeInputButton.setSize(70,30);
         sizeInputButton.setLocation(210, (rules.size() + 2) * 40);
         sizeInputButton.setFont(new Font("돋움", Font.BOLD, 15));
-        sizeInputErrorLabel.setSize(600, 20);
-        sizeInputErrorLabel.setLocation(10, 10 + (rules.size() + 3) * 40);
-        sizeInputErrorLabel.setFont(new Font("돋움", Font.BOLD, 15));
-        sizeInputErrorLabel.setForeground(Color.RED);
+        sizeInputResultLabel.setSize(600, 20);
+        sizeInputResultLabel.setLocation(10, 10 + (rules.size() + 3) * 40);
+        sizeInputResultLabel.setFont(new Font("돋움", Font.BOLD, 15));
 
         // title
         titleLabel.setSize(950, 40);
@@ -141,7 +140,7 @@ public class GameView extends JFrame {
         gameRulePanel.add(sizeInputLabel);
         gameRulePanel.add(sizeInputTextField);
         gameRulePanel.add(sizeInputButton);
-        gameRulePanel.add(sizeInputErrorLabel);
+        gameRulePanel.add(sizeInputResultLabel);
 
         // title
         gameTitlePanel.setSize(950, 50);
@@ -193,10 +192,14 @@ public class GameView extends JFrame {
         try {
             size = eventCommunicator.inputSizeInText(sizeInput);
         } catch (IllegalArgumentException error) {
-            sizeInputErrorLabel.setText(error.getMessage());
-            sizeInputErrorLabel.setVisible(true);
+            sizeInputResultLabel.setText(error.getMessage());
+            sizeInputResultLabel.setForeground(Color.RED);
+            sizeInputResultLabel.setVisible(true);
             return;
         }
+        sizeInputResultLabel.setText(size.size() + "을 입력하셨습니다.");
+        sizeInputResultLabel.setForeground(Color.BLUE);
+        sizeInputResultLabel.setVisible(true);
         gameGridPanel.setButtons(size);
         gameGridPanel.setGridPanel(size);
         setEventOfGridButtons();
