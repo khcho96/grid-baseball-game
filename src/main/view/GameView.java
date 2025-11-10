@@ -1,5 +1,7 @@
 package main.view;
 
+import static main.constant.Constant.SIZE;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import main.communicator.EventCommunicator;
@@ -33,6 +35,7 @@ public class GameView extends JFrame {
             "   1) 아웃 지점 선택 시: 아웃",
             "   2) 아웃 지점과 상하좌우로 인접한 칸 선택 시: 스트라이크",
             "   3) 아웃 지점과 대각선으로 인접한 칸 선택 시: 볼",
+            "   예) 1S 2B: 상하좌우 인접한 칸에 아웃이 1개, 대각선으로 인접한 칸에 아웃이 2개 존재",
             " 4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것을 목표로 합니다."
     );
     private final List<JLabel> ruleLabels = new ArrayList<>();
@@ -105,11 +108,13 @@ public class GameView extends JFrame {
         restartButton.setFont(new Font("돋움", Font.PLAIN, 20));
 
         // grid
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < SIZE; i++) {
             gridButtons.add(new ArrayList<>());
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < SIZE; j++) {
                 JButton jButton = new JButton();
                 jButton.setFocusPainted(false); // 포커스 하이라이트 숨김
+                jButton.setOpaque(true);              // 배경 직접 페인트 허용
+                jButton.setContentAreaFilled(true);   // 내용 영역을 실제로 칠함
                 gridButtons.get(i).add(jButton);
             }
         }
@@ -118,7 +123,7 @@ public class GameView extends JFrame {
         resultLabel.setSize(950, 100);
         resultLabel.setLocation(300, 10);
         resultLabel.setFont(new Font("돋움", Font.BOLD, 30));
-        resultLabel.setForeground(Color.BLUE);
+        resultLabel.setForeground(Color.RED);
     }
 
     private void setPanel() {
@@ -144,25 +149,25 @@ public class GameView extends JFrame {
         gameStatePanel.add(restartButton);
 
         // grid
-        gameGridPanel.setSize(500, 500);
-        gameGridPanel.setLocation(750, 100);
-        gameGridPanel.setLayout(new GridLayout(5, 5));
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        gameGridPanel.setSize(600, 600);
+        gameGridPanel.setLocation(700, 100);
+        gameGridPanel.setLayout(new GridLayout(SIZE, SIZE));
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 gameGridPanel.add(gridButtons.get(i).get(j));
             }
         }
 
         // Result
         gameResultPanel.setSize(950, 100);
-        gameResultPanel.setLocation(550, 600);
+        gameResultPanel.setLocation(550, 700);
         gameResultPanel.setLayout(null);
         gameResultPanel.add(resultLabel);
     }
 
     private void setEvents() {
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
                 int finalX = x;
                 int finalY = y;
                 JButton button = gridButtons.get(x).get(y);
@@ -172,6 +177,7 @@ public class GameView extends JFrame {
 
                             String result = eventCommunicator.clickGridButton(finalX, finalY);
                             button.setText(result);
+                            button.setFont(new Font("돋움", Font.BOLD, 12));
                             button.setForeground(Color.BLUE);
                             pitchesCount++;
                             if (result.equals("Out!⚾")) {
