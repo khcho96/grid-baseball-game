@@ -25,6 +25,6 @@ public class GameController {
     }
 
     public String transferGridButtonEvent(int x, int y) {
-        return gameService.processGridButtonEvent(x, y);
+        return gameService.handleGridButtonEvent(x, y);
     }
 }
