@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import main.dto.SizeDto;
-import main.view.Pannel.GameGridPanel;
+import main.view.panel.GameGridPanel;
 
 public class GameView extends JFrame {
 
