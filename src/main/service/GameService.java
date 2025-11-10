@@ -1,5 +1,7 @@
 package main.service;
 
+import static main.constant.Constant.SIZE;
+
 import java.util.ArrayList;
 import java.util.List;
 import main.domain.GridButtons;
@@ -12,10 +14,10 @@ public class GameService {
     private OutZone outZone;
 
     public void setGame() {
-        gridButtons = GridButtons.from(5);
+        gridButtons = GridButtons.from(SIZE);
         List<List<Integer>> outCoordinates = new ArrayList<>();
         while (outCoordinates.size() < 3) {
-            List<Integer> outCoordinate = RandomOutGenerator.generateOutZoneCoordinate(5);
+            List<Integer> outCoordinate = RandomOutGenerator.generateOutZoneCoordinate(SIZE);
             if (!outCoordinates.contains(outCoordinate)) {
                 outCoordinates.add(outCoordinate);
             }
@@ -23,7 +25,7 @@ public class GameService {
         outZone = OutZone.of(outCoordinates);
     }
 
-    public String processGridButtonEvent(int x, int y) {
+    public String handleGridButtonEvent(int x, int y) {
         return gridButtons.computeEventResult(x, y, outZone);
     }
 }
