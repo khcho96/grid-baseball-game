@@ -1,30 +1,29 @@
 package main.view;
 
-import static main.constant.Constant.SIZE;
-
 import java.awt.Color;
-import java.awt.event.ActionListener;
+import javax.swing.JTextField;
 import main.communicator.EventCommunicator;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import main.application.Application;
+import main.dto.SizeDto;
+import main.view.Pannel.GameGridPanel;
 
 public class GameView extends JFrame {
 
     private final JPanel gameRulePanel = new JPanel();
     private final JPanel gameTitlePanel = new JPanel();
     private final JPanel gameStatePanel = new JPanel();
-    private final JPanel gameGridPanel = new JPanel();
+    private final GameGridPanel gameGridPanel = new GameGridPanel();
     private final JPanel gameResultPanel = new JPanel();
 
     private final EventCommunicator eventCommunicator = new EventCommunicator();
+    private SizeDto size;
 
     // gameRulePanel
     private final List<String> rules = List.of(
@@ -39,6 +38,10 @@ public class GameView extends JFrame {
             " 4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것을 목표로 합니다."
     );
     private final List<JLabel> ruleLabels = new ArrayList<>();
+    private final JLabel sizeInputLabel = new JLabel("격자 크기를 입력해주세요.(3~10) 입력 예) 5");
+    private final JTextField sizeInputTextField = new JTextField();
+    private final JButton sizeInputButton = new JButton("입력");
+    private final JLabel sizeInputErrorLabel = new JLabel();
 
     // gameTitlePanel
     private final JLabel titleLabel = new JLabel("⚾ 격자 야구 게임 🧢");
@@ -50,13 +53,10 @@ public class GameView extends JFrame {
     private final JLabel stateLabel = new JLabel("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
     private final JButton restartButton = new JButton("↩︎Restart");
 
-    // gameGridPanel
-    private final List<List<JButton>> gridButtons = new ArrayList<>();
-
     // gameResultPanel
     private final JLabel resultLabel = new JLabel();
 
-    public GameView() {
+    public GameView(SizeDto size) {
         setTitle("격자 야구 게임"); // 프레임 제목 설정.
         setSize(1500, 900); // 프레임의 크기 설정.
         setResizable(true); // 프레임의 크기 변경 못하게 설정.
@@ -64,6 +64,7 @@ public class GameView extends JFrame {
 
         setLayout(null);
 
+        this.size = size;
         setComponents();
         setPanel();
         setEvents(); // 이벤트 처리!
@@ -93,6 +94,18 @@ public class GameView extends JFrame {
             ruleLabels.get(i).setLocation(0, 10 + i * 40);
             ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 15));
         }
+        sizeInputLabel.setSize(300, 20);
+        sizeInputLabel.setLocation(10, 10 + (rules.size() + 1) * 40);
+        sizeInputLabel.setFont(new Font("돋움", Font.BOLD, 15));
+        sizeInputTextField.setSize(200, 30);
+        sizeInputTextField.setLocation(10, (rules.size() + 2) * 40);
+        sizeInputButton.setSize(70,30);
+        sizeInputButton.setLocation(210, (rules.size() + 2) * 40);
+        sizeInputButton.setFont(new Font("돋움", Font.BOLD, 15));
+        sizeInputErrorLabel.setSize(600, 20);
+        sizeInputErrorLabel.setLocation(10, 10 + (rules.size() + 3) * 40);
+        sizeInputErrorLabel.setFont(new Font("돋움", Font.BOLD, 15));
+        sizeInputErrorLabel.setForeground(Color.RED);
 
         // title
         titleLabel.setSize(950, 40);
@@ -108,16 +121,7 @@ public class GameView extends JFrame {
         restartButton.setFont(new Font("돋움", Font.PLAIN, 20));
 
         // grid
-        for (int i = 0; i < SIZE; i++) {
-            gridButtons.add(new ArrayList<>());
-            for (int j = 0; j < SIZE; j++) {
-                JButton jButton = new JButton();
-                jButton.setFocusPainted(false); // 포커스 하이라이트 숨김
-                jButton.setOpaque(true);              // 배경 직접 페인트 허용
-                jButton.setContentAreaFilled(true);   // 내용 영역을 실제로 칠함
-                gridButtons.get(i).add(jButton);
-            }
-        }
+        gameGridPanel.setButtons(size);
 
         // result
         resultLabel.setSize(950, 100);
@@ -134,6 +138,10 @@ public class GameView extends JFrame {
         for (JLabel ruleLabel : ruleLabels) {
             gameRulePanel.add(ruleLabel);
         }
+        gameRulePanel.add(sizeInputLabel);
+        gameRulePanel.add(sizeInputTextField);
+        gameRulePanel.add(sizeInputButton);
+        gameRulePanel.add(sizeInputErrorLabel);
 
         // title
         gameTitlePanel.setSize(950, 50);
@@ -149,14 +157,7 @@ public class GameView extends JFrame {
         gameStatePanel.add(restartButton);
 
         // grid
-        gameGridPanel.setSize(600, 600);
-        gameGridPanel.setLocation(700, 100);
-        gameGridPanel.setLayout(new GridLayout(SIZE, SIZE));
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                gameGridPanel.add(gridButtons.get(i).get(j));
-            }
-        }
+        gameGridPanel.setGridPanel(size);
 
         // Result
         gameResultPanel.setSize(950, 100);
@@ -166,18 +167,56 @@ public class GameView extends JFrame {
     }
 
     private void setEvents() {
-        for (int x = 0; x < SIZE; x++) {
-            for (int y = 0; y < SIZE; y++) {
+        setEventOfGridButtons();
+
+        restartButton.addActionListener(
+                e -> {
+                    eventCommunicator.clickRestartButton();
+                }
+        );
+
+        sizeInputTextField.addActionListener(
+                e -> {
+                    changeGridSize();
+                }
+        );
+
+        sizeInputButton.addActionListener(
+                e -> {
+                    changeGridSize();
+                }
+        );
+    }
+
+    private void changeGridSize() {
+        String sizeInput = sizeInputTextField.getText();
+        try {
+            size = eventCommunicator.inputSizeInText(sizeInput);
+        } catch (IllegalArgumentException error) {
+            sizeInputErrorLabel.setText(error.getMessage());
+            sizeInputErrorLabel.setVisible(true);
+            return;
+        }
+        gameGridPanel.setButtons(size);
+        gameGridPanel.setGridPanel(size);
+        setEventOfGridButtons();
+    }
+
+    private void setEventOfGridButtons() {
+        List<List<JButton>> buttons = gameGridPanel.getButtons();
+        for (int x = 0; x < size.size(); x++) {
+            for (int y = 0; y < size.size(); y++) {
                 int finalX = x;
                 int finalY = y;
-                JButton button = gridButtons.get(x).get(y);
+                JButton button = buttons.get(x).get(y);
                 button.addActionListener(
                         e -> {
-                            if (gameOver) return;
+                            if (gameOver) {
+                                return;
+                            }
 
                             String result = eventCommunicator.clickGridButton(finalX, finalY);
                             button.setText(result);
-                            button.setFont(new Font("돋움", Font.BOLD, 12));
                             button.setForeground(Color.BLUE);
                             pitchesCount++;
                             if (result.equals("Out!⚾")) {
@@ -188,33 +227,13 @@ public class GameView extends JFrame {
                             if (outCount == 3) {
                                 resultLabel.setText("우승입니다!!🏆 투구 수: " + pitchesCount);
                                 gameOver = true;
-                                disableAllGridButtons();
+                                gameGridPanel.disableAllGridButtons();
                             }
 
-                           disableOneGridButton(button);
+                            gameGridPanel.disableOneGridButton(button);
                         }
                 );
             }
-        }
-
-        restartButton.addActionListener(
-                e -> {
-                    Application.main(new String[]{});
-                }
-        );
-    }
-
-    private void disableAllGridButtons() {
-        for (List<JButton> gridButton : gridButtons) {
-            for (JButton button : gridButton) {
-                disableOneGridButton(button);
-            }
-        }
-    }
-
-    private void disableOneGridButton(JButton button) {
-        for (ActionListener actionListener : button.getActionListeners()) {
-            button.removeActionListener(actionListener);
         }
     }
 }
