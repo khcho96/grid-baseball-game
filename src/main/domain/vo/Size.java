@@ -1,4 +1,4 @@
-package main.domain;
+package main.domain.vo;
 
 import static main.constant.Constant.MAX_SIZE;
 import static main.constant.Constant.MIN_SIZE;

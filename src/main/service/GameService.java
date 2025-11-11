@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import main.domain.GridButtons;
 import main.domain.OutZone;
-import main.domain.Size;
+import main.domain.vo.Size;
 import main.dto.SizeDto;
 import main.generator.RandomOutGenerator;
 

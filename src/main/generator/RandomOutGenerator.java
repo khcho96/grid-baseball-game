@@ -3,7 +3,7 @@ package main.generator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import main.domain.Size;
+import main.domain.vo.Size;
 
 public class RandomOutGenerator {
 

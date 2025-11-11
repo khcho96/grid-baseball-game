@@ -2,6 +2,7 @@ package main.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import main.domain.vo.Size;
 
 public class GridButtons {
 
