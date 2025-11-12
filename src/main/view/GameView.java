@@ -74,8 +74,4 @@ public class GameView extends JFrame {
         // Result
         gameResultPanel.setResultPanel();
     }
-
-    private void setEvents() {
-
-    }
 }
