@@ -33,72 +33,73 @@ public class EventSetter {
     public void setEvents() {
         setEventOfGridButtons();
 
-        gameStatePanel.getRestartButton().addActionListener(
-                e -> {
-                    eventCommunicator.clickRestartButton();
-                }
-        );
+        gameStatePanel.getRestartButton().addActionListener(e -> {
+            eventCommunicator.clickRestartButton();
+        });
 
-        gameRulePanel.getSizeInputTextField().addActionListener(
-                e -> {
-                    changeGridSize();
-                    gameGridPanel.setGridComponents(size);
-                    gameGridPanel.setGridPanel(size);
-                    setEventOfGridButtons();
-                    gameStatePanel.resetState();
-                    gameResultPanel.disableResultView();
-                }
-        );
+        gameRulePanel.getSizeInputTextField().addActionListener(e -> {
+            setEventOfSizeInput();
+        });
 
-        gameRulePanel.getSizeInputButton().addActionListener(
-                e -> {
-                    changeGridSize();
-                    gameGridPanel.setGridComponents(size);
-                    gameGridPanel.setGridPanel(size);
-                    setEventOfGridButtons();
-                    gameStatePanel.resetState();
-                    gameResultPanel.disableResultView();
-                }
-        );
+        gameRulePanel.getSizeInputButton().addActionListener(e -> {
+            setEventOfSizeInput();
+        });
     }
 
-    public void setEventOfGridButtons() {
+    private void setEventOfSizeInput() {
+        changeGridSize();
+        gameGridPanel.setGridComponents(size);
+        gameGridPanel.setGridPanel(size);
+        setEventOfGridButtons();
+        gameStatePanel.resetState();
+        gameResultPanel.disableResultView();
+    }
+
+    private void setEventOfGridButtons() {
         List<List<JButton>> buttons = gameGridPanel.getButtons();
         for (int x = 0; x < size.size(); x++) {
             for (int y = 0; y < size.size(); y++) {
-                int finalX = x;
-                int finalY = y;
                 JButton button = buttons.get(x).get(y);
-                button.addActionListener(
-                        e -> {
-                            if (gameStatePanel.isGameOver()) {
-                                return;
-                            }
-
-                            String result = eventCommunicator.clickGridButton(finalX, finalY);
-
-                            button.setText(result);
-                            button.setForeground(Color.BLUE);
-                            gameStatePanel.increasePitchesCount();
-
-                            if (result.equals("Out!⚾")) {
-                                button.setForeground(Color.RED);
-                                gameStatePanel.increaseOutCount();
-                            }
-
-                            gameStatePanel.updateState();
-
-                            if (gameStatePanel.isMaxOutCount()) {
-                                gameResultPanel.showResult(gameStatePanel.getPitchesCount());
-                                gameStatePanel.setGameOver();
-                                gameGridPanel.disableAllGridButtons();
-                            }
-
-                            gameGridPanel.disableGridButton(button);
-                        }
-                );
+                setEventOfGridButton(button, x, y);
             }
         }
+    }
+
+    private void setEventOfGridButton(JButton button, int x, int y) {
+        button.addActionListener(e -> {
+            if (gameStatePanel.isGameOver()) {
+                return;
+            }
+
+            String result = eventCommunicator.clickGridButton(x, y);
+
+            showResultForEachButton(button, result);
+
+            ShowResultForFinalButton(button);
+        });
+    }
+
+    private void ShowResultForFinalButton(JButton button) {
+        if (gameStatePanel.isMaxOutCount()) {
+            gameResultPanel.showResult(gameStatePanel.getPitchesCount());
+            gameStatePanel.setGameOver();
+            gameGridPanel.disableAllGridButtons();
+        }
+
+        gameGridPanel.disableGridButton(button);
+    }
+
+    private void showResultForEachButton(JButton button, String result) {
+        button.setText(result);
+        button.setForeground(Color.BLUE);
+        gameStatePanel.increasePitchesCount();
+
+        if (result.equals("Out!⚾")) {
+            button.setForeground(Color.RED);
+            gameStatePanel.increaseOutCount();
+        }
+
+        gameStatePanel.updateState();
     }
 
     private void changeGridSize() {
