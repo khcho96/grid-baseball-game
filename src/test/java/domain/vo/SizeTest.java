@@ -29,7 +29,7 @@ class SizeTest {
 
     @ParameterizedTest
     @CsvSource(value = {"3,3", "5,5", "8,8"})
-    void 정상입력(String value, int expectedSize) {
+    void 사이즈_객체_정상적으로_생성(String value, int expectedSize) {
         // given
         Size size = Size.newInstance(value);
 
