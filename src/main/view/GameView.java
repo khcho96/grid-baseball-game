@@ -1,60 +1,29 @@
 package main.view;
 
 import java.awt.Color;
-import javax.swing.JTextField;
 import main.communicator.EventCommunicator;
 
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import main.dto.SizeDto;
 import main.view.panel.GameGridPanel;
+import main.view.panel.GameResultPanel;
+import main.view.panel.GameRulePanel;
+import main.view.panel.GameStatePanel;
+import main.view.panel.GameTitlePanel;
 
 public class GameView extends JFrame {
 
-    private final JPanel gameRulePanel = new JPanel();
-    private final JPanel gameTitlePanel = new JPanel();
-    private final JPanel gameStatePanel = new JPanel();
+    // panel
+    private final GameRulePanel gameRulePanel = new GameRulePanel();
+    private final GameTitlePanel gameTitlePanel = new GameTitlePanel();
+    private final GameStatePanel gameStatePanel = new GameStatePanel();
     private final GameGridPanel gameGridPanel = new GameGridPanel();
-    private final JPanel gameResultPanel = new JPanel();
+    private final GameResultPanel gameResultPanel = new GameResultPanel();
 
     private final EventCommunicator eventCommunicator = new EventCommunicator();
-    private SizeDto size;
-
-    // gameRulePanel
-    private final List<String> rules = List.of(
-            " 🚥 게임 규칙 🚥",
-            " 1. 마무리 투수인 당신은 3아웃을 잡아 이 이닝을 끝내면, 팀을 우승으로 이끕니다.",
-            " 2. 아웃은 N × N 보드의 N^2개 칸 중 서로 다른 세 칸에 무작위로 배치됩니다.",
-            " 3. 칸을 선택하면 아웃 지점에 대한 힌트가 주어집니다.",
-            "   1) 아웃 지점 선택 시: 아웃",
-            "   2) 아웃 지점과 상하좌우로 인접한 칸 선택 시: 스트라이크",
-            "   3) 아웃 지점과 대각선으로 인접한 칸 선택 시: 볼",
-            "   예) 1S 2B: 상하좌우 인접한 칸에 아웃이 1개, 대각선으로 인접한 칸에 아웃이 2개 존재",
-            " 4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것을 목표로 합니다."
-    );
-    private final List<JLabel> ruleLabels = new ArrayList<>();
-    private final JLabel sizeInputLabel = new JLabel("격자 크기를 입력해주세요.(3~8) 입력 예) 5");
-    private final JTextField sizeInputTextField = new JTextField();
-    private final JButton sizeInputButton = new JButton("입력");
-    private final JLabel sizeInputResultLabel = new JLabel();
-
-    // gameTitlePanel
-    private final JLabel titleLabel = new JLabel("⚾ 격자 야구 게임 🧢");
-
-    // gameStatePanel
-    private int pitchesCount;
-    private int outCount;
-    private boolean gameOver = false;
-    private final JLabel stateLabel = new JLabel("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
-    private final JButton restartButton = new JButton("↩︎Restart");
-
-    // gameResultPanel
-    private final JLabel resultLabel = new JLabel();
+    private final SizeDto size;
+    private final EventSetter eventSetter;
 
     public GameView(SizeDto size) {
         setTitle("격자 야구 게임"); // 프레임 제목 설정.
@@ -65,9 +34,11 @@ public class GameView extends JFrame {
         setLayout(null);
 
         this.size = size;
+        eventSetter = new EventSetter(eventCommunicator, size, gameRulePanel,
+                gameStatePanel, gameGridPanel, gameResultPanel);
         setComponents();
         setPanel();
-        setEvents(); // 이벤트 처리!
+        eventSetter.setEvents();
 
         add(gameRulePanel);
         add(gameTitlePanel);
@@ -75,168 +46,36 @@ public class GameView extends JFrame {
         add(gameGridPanel);
         add(gameResultPanel);
 
-        setVisible(true); // 프레임 보이기;
+        setVisible(true);
     }
 
     private void setComponents() {
         // rule
-        for (int i = 0; i < rules.size(); i++) {
-            ruleLabels.add(new JLabel(rules.get(i)));
-
-            if (i == 0) {
-                ruleLabels.get(i).setSize(600, 30);
-                ruleLabels.get(i).setLocation(200, 10);
-                ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 20));
-                continue;
-            }
-
-            ruleLabels.get(i).setSize(600, 30);
-            ruleLabels.get(i).setLocation(0, 10 + i * 40);
-            ruleLabels.get(i).setFont(new Font("돋움", Font.BOLD, 15));
-        }
-        sizeInputLabel.setSize(300, 20);
-        sizeInputLabel.setLocation(10, 10 + (rules.size() + 1) * 40);
-        sizeInputLabel.setFont(new Font("돋움", Font.BOLD, 15));
-        sizeInputTextField.setSize(200, 30);
-        sizeInputTextField.setLocation(10, (rules.size() + 2) * 40);
-        sizeInputButton.setSize(70,30);
-        sizeInputButton.setLocation(210, (rules.size() + 2) * 40);
-        sizeInputButton.setFont(new Font("돋움", Font.BOLD, 15));
-        sizeInputResultLabel.setSize(600, 20);
-        sizeInputResultLabel.setLocation(10, 10 + (rules.size() + 3) * 40);
-        sizeInputResultLabel.setFont(new Font("돋움", Font.BOLD, 15));
-
+        gameRulePanel.setRuleComponents();
         // title
-        titleLabel.setSize(950, 40);
-        titleLabel.setLocation(275, 10);
-        titleLabel.setFont(new Font("돋움", Font.BOLD, 40));
-
+        gameTitlePanel.setTitleComponents();
         // state
-        stateLabel.setSize(700, 50);
-        stateLabel.setLocation(350, 10);
-        stateLabel.setFont(new Font("돋움", Font.PLAIN, 20));
-        restartButton.setSize(100, 40);
-        restartButton.setLocation(600, 10);
-        restartButton.setFont(new Font("돋움", Font.PLAIN, 20));
-
+        gameStatePanel.setStateComponents();
         // grid
-        gameGridPanel.setButtons(size);
-
+        gameGridPanel.setGridComponents(size);
         // result
-        resultLabel.setSize(950, 100);
-        resultLabel.setLocation(300, 10);
-        resultLabel.setFont(new Font("돋움", Font.BOLD, 30));
-        resultLabel.setForeground(Color.RED);
+        gameResultPanel.setResultComponents();
     }
 
     private void setPanel() {
         // rule
-        gameRulePanel.setSize(600, 900);
-        gameRulePanel.setLocation(0, 0);
-        gameRulePanel.setLayout(null);
-        for (JLabel ruleLabel : ruleLabels) {
-            gameRulePanel.add(ruleLabel);
-        }
-        gameRulePanel.add(sizeInputLabel);
-        gameRulePanel.add(sizeInputTextField);
-        gameRulePanel.add(sizeInputButton);
-        gameRulePanel.add(sizeInputResultLabel);
-
+        gameRulePanel.setRulePanel();
         // title
-        gameTitlePanel.setSize(950, 50);
-        gameTitlePanel.setLocation(550, 0);
-        gameTitlePanel.setLayout(null);
-        gameTitlePanel.add(titleLabel);
-
+        gameTitlePanel.setTitlePanel();
         // state
-        gameStatePanel.setSize(950, 50);
-        gameStatePanel.setLocation(550, 50);
-        gameStatePanel.setLayout(null);
-        gameStatePanel.add(stateLabel);
-        gameStatePanel.add(restartButton);
-
+        gameStatePanel.setStatePanel();
         // grid
         gameGridPanel.setGridPanel(size);
-
         // Result
-        gameResultPanel.setSize(950, 100);
-        gameResultPanel.setLocation(550, 700);
-        gameResultPanel.setLayout(null);
-        gameResultPanel.add(resultLabel);
+        gameResultPanel.setResultPanel();
     }
 
     private void setEvents() {
-        setEventOfGridButtons();
 
-        restartButton.addActionListener(
-                e -> {
-                    eventCommunicator.clickRestartButton();
-                }
-        );
-
-        sizeInputTextField.addActionListener(
-                e -> {
-                    changeGridSize();
-                }
-        );
-
-        sizeInputButton.addActionListener(
-                e -> {
-                    changeGridSize();
-                }
-        );
-    }
-
-    private void changeGridSize() {
-        String sizeInput = sizeInputTextField.getText();
-        try {
-            size = eventCommunicator.inputSizeInText(sizeInput);
-        } catch (IllegalArgumentException error) {
-            sizeInputResultLabel.setText(error.getMessage());
-            sizeInputResultLabel.setForeground(Color.RED);
-            sizeInputResultLabel.setVisible(true);
-            return;
-        }
-        sizeInputResultLabel.setText(size.size() + "을 입력하셨습니다.");
-        sizeInputResultLabel.setForeground(Color.BLUE);
-        sizeInputResultLabel.setVisible(true);
-        gameGridPanel.setButtons(size);
-        gameGridPanel.setGridPanel(size);
-        setEventOfGridButtons();
-    }
-
-    private void setEventOfGridButtons() {
-        List<List<JButton>> buttons = gameGridPanel.getButtons();
-        for (int x = 0; x < size.size(); x++) {
-            for (int y = 0; y < size.size(); y++) {
-                int finalX = x;
-                int finalY = y;
-                JButton button = buttons.get(x).get(y);
-                button.addActionListener(
-                        e -> {
-                            if (gameOver) {
-                                return;
-                            }
-
-                            String result = eventCommunicator.clickGridButton(finalX, finalY);
-                            button.setText(result);
-                            button.setForeground(Color.BLUE);
-                            pitchesCount++;
-                            if (result.equals("Out!⚾")) {
-                                button.setForeground(Color.RED);
-                                outCount++;
-                            }
-                            stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
-                            if (outCount == 3) {
-                                resultLabel.setText("우승입니다!!🏆 투구 수: " + pitchesCount);
-                                gameOver = true;
-                                gameGridPanel.disableAllGridButtons();
-                            }
-
-                            gameGridPanel.disableOneGridButton(button);
-                        }
-                );
-            }
-        }
     }
 }

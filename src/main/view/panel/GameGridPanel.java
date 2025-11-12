@@ -14,12 +14,11 @@ public class GameGridPanel extends JPanel {
     private List<List<JButton>> gridButtons;
 
     public List<List<JButton>> getButtons() {
-        return gridButtons;
+        return List.copyOf(gridButtons);
     }
 
-    public void setButtons(SizeDto size) {
-        gridButtons = new ArrayList<>();
-        generateButtons(size);
+    public void setGridComponents(SizeDto size) {
+        setButtons(size);
     }
 
     public void setGridPanel(SizeDto size) {
@@ -39,7 +38,8 @@ public class GameGridPanel extends JPanel {
         repaint();
     }
 
-    private void generateButtons(SizeDto size) {
+    private void setButtons(SizeDto size) {
+        gridButtons = new ArrayList<>();
         for (int i = 0; i < size.size(); i++) {
             gridButtons.add(new ArrayList<>());
             for (int j = 0; j < size.size(); j++) {
@@ -54,12 +54,12 @@ public class GameGridPanel extends JPanel {
     public void disableAllGridButtons() {
         for (List<JButton> gridButton : gridButtons) {
             for (JButton button : gridButton) {
-                disableOneGridButton(button);
+                disableGridButton(button);
             }
         }
     }
 
-    public void disableOneGridButton(JButton button) {
+    public void disableGridButton(JButton button) {
         for (ActionListener actionListener : button.getActionListeners()) {
             button.removeActionListener(actionListener);
         }
