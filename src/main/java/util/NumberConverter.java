@@ -10,7 +10,7 @@ public final class NumberConverter {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new RuntimeException(NUMBER_FORMAT_ERROR.getErrorMessage());
+            throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
         }
     }
 }

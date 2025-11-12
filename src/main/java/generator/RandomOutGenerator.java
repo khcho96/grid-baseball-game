@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Random;
 import domain.vo.Size;
 
-public class RandomOutGenerator {
+public final class RandomOutGenerator {
+
+    private RandomOutGenerator() {};
 
     public static List<Integer> generateOutZoneCoordinate(Size size) {
         Random random = new Random();

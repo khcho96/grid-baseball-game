@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+repositories { mavenCentral() }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+}
+test { useJUnitPlatform() }

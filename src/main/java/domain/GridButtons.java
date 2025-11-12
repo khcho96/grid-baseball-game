@@ -8,7 +8,7 @@ public class GridButtons {
 
     private final List<List<GridButton>> gridButtons;
 
-    public GridButtons(List<List<GridButton>> gridButtons) {
+    private GridButtons(List<List<GridButton>> gridButtons) {
         this.gridButtons = gridButtons;
     }
 
@@ -34,7 +34,6 @@ public class GridButtons {
         String ballCount = "<span style='color:#377E22;'>" + computeBallCount(x, y, outZone) + "B</span></html>";
 
         return strikeCount + ballCount;
-
     }
 
     private int computeStrikeCount(int x, int y, OutZone outZone) {

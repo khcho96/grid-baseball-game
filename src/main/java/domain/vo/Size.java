@@ -7,11 +7,11 @@ import static constant.ErrorMessage.RANGE_ERROR;
 
 import util.NumberConverter;
 
-public class Size {
+public final class Size {
 
     private final int size;
 
-    public Size(String sizeInput) {
+    private Size(String sizeInput) {
         validateNumber(sizeInput);
         int size = NumberConverter.convertStringToNumber(sizeInput);
         validateRange(size);

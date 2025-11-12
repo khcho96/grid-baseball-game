@@ -7,7 +7,7 @@ public class OutZone {
 
     private final List<GridButton> outZones;
 
-    public OutZone(List<GridButton> outZone) {
+    private OutZone(List<GridButton> outZone) {
         this.outZones = outZone;
     }
 
