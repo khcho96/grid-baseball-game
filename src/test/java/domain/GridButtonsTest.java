@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class GridButtonsTest {
+class GridButtonsTest {
 
     private final OutZone outZone = OutZone.of(List.of(
             List.of(0, 1), List.of(2, 1), List.of(2, 2)
