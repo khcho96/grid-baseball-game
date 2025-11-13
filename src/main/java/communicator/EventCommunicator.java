@@ -1,17 +1,18 @@
 package communicator;
 
 import application.Application;
+import controller.BattleGameController;
 import controller.SingleGameController;
 import dto.SizeDto;
 
 public class EventCommunicator {
 
     private final SingleGameController singleGameController;
-//    private final BattleGameController battleGameController;
+    private final BattleGameController battleGameController;
 
     public EventCommunicator() {
         singleGameController = SingleGameController.getInstance();
-//        battleGameController = SingleGameController.getInstance();
+        battleGameController = BattleGameController.getInstance();
     }
 
     public void selectSingleGame() {
@@ -19,7 +20,7 @@ public class EventCommunicator {
     }
 
     public void selectBattleGame() {
-//        battleGameController.startBattleGame();
+        battleGameController.startBattleGame();
     }
 
     public void clickBackButton() {
