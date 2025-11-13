@@ -1,40 +1,23 @@
 package controller;
 
-import dto.SizeDto;
-import service.GameService;
-import view.GameView;
+import view.init.InitView;
 
 public class GameController {
 
     private static GameController isExist;
-    private final GameService gameService;
+    private final SingleGameController singleGameController;
+    private final BattleGameController battleGameController;
 
-    private GameController(GameService gameService) {
-        this.gameService = gameService;
+    private GameController(SingleGameController singleGameController, BattleGameController battleGameController) {
+        this.singleGameController = singleGameController;
+        this.battleGameController = battleGameController;
     }
 
-    public static GameController getInstance() {
-        if (isExist == null) {
-            isExist = new GameController(new GameService());
-        }
-        return isExist;
+    public static GameController getInstance(SingleGameController singleGameController, BattleGameController battleGameController) {
+        return new GameController(singleGameController, battleGameController);
     }
 
-    public void startGame() {
-        SizeDto size = gameService.setInitGame();
-        new GameView(size);
-    }
-
-    public void restartGame() {
-        SizeDto size = gameService.handleRestartGame();
-        new GameView(size);
-    }
-
-    public String transferGridButtonEvent(int x, int y) {
-        return gameService.handleGridButtonEvent(x, y);
-    }
-
-    public SizeDto transferSizeInputEvent(String sizeInput) {
-        return gameService.handleSizeInputEvent(sizeInput);
+    public void startInitView() {
+        new InitView();
     }
 }

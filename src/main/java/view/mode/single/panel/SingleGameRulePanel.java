@@ -1,4 +1,4 @@
-package view.panel;
+package view.mode.single.panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import view.util.ComponentSetter;
 
-public class GameRulePanel extends JPanel {
+public class SingleGameRulePanel extends JPanel {
 
     private final List<String> rules = List.of(
             " 🚥 게임 규칙 🚥",

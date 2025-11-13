@@ -1,4 +1,4 @@
-package view.panel;
+package view.mode.single.panel;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import dto.SizeDto;
 
-public class GameGridPanel extends JPanel {
+public class SingleGameGridPanel extends JPanel {
 
     private List<List<JButton>> gridButtons;
 

@@ -1,27 +1,27 @@
-package view;
+package view.mode.single;
 
 import java.awt.Color;
 import java.util.List;
 import javax.swing.JButton;
 import communicator.EventCommunicator;
 import dto.SizeDto;
-import view.panel.GameGridPanel;
-import view.panel.GameResultPanel;
-import view.panel.GameRulePanel;
-import view.panel.GameStatePanel;
+import view.mode.single.panel.SingleGameGridPanel;
+import view.mode.single.panel.SingleGameResultPanel;
+import view.mode.single.panel.SingleGameRulePanel;
+import view.mode.single.panel.SingleGameStatePanel;
 
-public class EventSetter {
+public class SingleGameEventSetter {
 
-    private final GameRulePanel gameRulePanel;
-    private final GameStatePanel gameStatePanel;
-    private final GameGridPanel gameGridPanel;
-    private final GameResultPanel gameResultPanel;
+    private final SingleGameRulePanel gameRulePanel;
+    private final SingleGameStatePanel gameStatePanel;
+    private final SingleGameGridPanel gameGridPanel;
+    private final SingleGameResultPanel gameResultPanel;
 
     private final EventCommunicator eventCommunicator;
     private SizeDto size;
 
-    public EventSetter(EventCommunicator eventCommunicator, SizeDto size, GameRulePanel gameRulePanel,
-                       GameStatePanel gameStatePanel, GameGridPanel gameGridPanel, GameResultPanel gameResultPanel) {
+    public SingleGameEventSetter(EventCommunicator eventCommunicator, SizeDto size, SingleGameRulePanel gameRulePanel,
+                                 SingleGameStatePanel gameStatePanel, SingleGameGridPanel gameGridPanel, SingleGameResultPanel gameResultPanel) {
         this.eventCommunicator = eventCommunicator;
         this.size = size;
         this.gameRulePanel = gameRulePanel;

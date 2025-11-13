@@ -1,4 +1,4 @@
-package view.panel;
+package view.mode.single.panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import view.util.ComponentSetter;
 
-public class GameTitlePanel extends JPanel {
+public class SingleGameTitlePanel extends JPanel {
 
     private final JLabel titleLabel = new JLabel("⚾ 격자 야구 게임 🧢");
 

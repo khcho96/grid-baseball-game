@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/grid-baseball-game.iml" filepath="$PROJECT_DIR$/grid-baseball-game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/grid-baseball-game.main.iml" filepath="$PROJECT_DIR$/.idea/modules/grid-baseball-game.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/grid-baseball-game.test.iml" filepath="$PROJECT_DIR$/.idea/modules/grid-baseball-game.test.iml" />
     </modules>
   </component>
 </project>

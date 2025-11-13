@@ -1,4 +1,4 @@
-package view.panel;
+package view.mode.single.panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import view.util.ComponentSetter;
 
-public class GameStatePanel extends JPanel {
+public class SingleGameStatePanel extends JPanel {
 
     private int pitchesCount;
     private int outCount;

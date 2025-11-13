@@ -1,25 +1,35 @@
 package communicator;
 
-import controller.GameController;
+import controller.SingleGameController;
 import dto.SizeDto;
 
 public class EventCommunicator {
 
-    private final GameController gameController;
+    private final SingleGameController singleGameController;
+//    private final BattleGameController battleGameController;
 
     public EventCommunicator() {
-        gameController = GameController.getInstance();
+        singleGameController = SingleGameController.getInstance();
+//        battleGameController = SingleGameController.getInstance();
+    }
+
+    public void selectSingleGame() {
+        singleGameController.startSingleGame();
+    }
+
+    public void selectBattleGame() {
+//        battleGameController.startBattleGame();
     }
 
     public String clickGridButton(int x, int y) {
-        return gameController.transferGridButtonEvent(x, y);
+        return singleGameController.transferGridButtonEvent(x, y);
     }
 
     public SizeDto inputSizeInText(String sizeInput) {
-        return gameController.transferSizeInputEvent(sizeInput);
+        return singleGameController.transferSizeInputEvent(sizeInput);
     }
 
     public void clickRestartButton() {
-        gameController.restartGame();
+        singleGameController.restartSingleGame();
     }
 }
