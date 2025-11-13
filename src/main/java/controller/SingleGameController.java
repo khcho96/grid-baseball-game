@@ -1,21 +1,21 @@
 package controller;
 
 import dto.SizeDto;
-import service.GameService;
+import service.SingleGameService;
 import view.mode.single.SingleGameView;
 
 public class SingleGameController {
 
     private static SingleGameController isExist;
-    private final GameService gameService;
+    private final SingleGameService gameService;
 
-    private SingleGameController(GameService gameService) {
+    private SingleGameController(SingleGameService gameService) {
         this.gameService = gameService;
     }
 
     public static SingleGameController getInstance() {
         if (isExist == null) {
-            isExist = new SingleGameController(new GameService());
+            isExist = new SingleGameController(new SingleGameService());
         }
         return isExist;
     }
