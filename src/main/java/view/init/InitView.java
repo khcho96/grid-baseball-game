@@ -14,8 +14,6 @@ public class InitView extends JFrame {
     private final JLabel modeLabel = new JLabel("🕹 모드를 선택하세요 🕹");
     private final JButton singleButton = new JButton("혼자 플레이 👤");
     private final JButton battleButton = new JButton("컴퓨터와 대결 🤖");
-    private final EventCommunicator eventCommunicator = new EventCommunicator();
-    private final InitEventSetter eventSetter;
 
     public InitView() {
         setTitle("격자 야구 게임");
@@ -24,7 +22,7 @@ public class InitView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE); // 프레임의 x버튼 누르면 종료;
         setLayout(null);
 
-        eventSetter = new InitEventSetter(eventCommunicator, singleButton, battleButton);
+        InitEventSetter eventSetter = new InitEventSetter(new EventCommunicator(), singleButton, battleButton);
 
         setComponents();
         eventSetter.setEvents();

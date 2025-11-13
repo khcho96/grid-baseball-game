@@ -2,7 +2,6 @@ package view.init;
 
 import communicator.EventCommunicator;
 import javax.swing.JButton;
-import view.mode.single.SingleGameView;
 
 public class InitEventSetter {
 
