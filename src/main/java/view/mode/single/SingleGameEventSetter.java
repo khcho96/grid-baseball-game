@@ -33,6 +33,10 @@ public class SingleGameEventSetter {
     public void setEvents() {
         setEventOfGridButtons();
 
+        gameStatePanel.getBackButton().addActionListener(e -> {
+            eventCommunicator.clickBackButton();
+        });
+
         gameStatePanel.getRestartButton().addActionListener(e -> {
             eventCommunicator.clickRestartButton();
         });
