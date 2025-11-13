@@ -8,20 +8,15 @@ import view.mode.single.panel.SingleGameGridPanel;
 import view.mode.single.panel.SingleGameResultPanel;
 import view.mode.single.panel.SingleGameRulePanel;
 import view.mode.single.panel.SingleGameStatePanel;
-import view.mode.single.panel.SingleGameTitlePanel;
 
 public class SingleGameView extends JFrame {
 
-    // panel
     private final SingleGameRulePanel gameRulePanel = new SingleGameRulePanel();
-    private final SingleGameTitlePanel gameTitlePanel = new SingleGameTitlePanel();
     private final SingleGameStatePanel gameStatePanel = new SingleGameStatePanel();
     private final SingleGameGridPanel gameGridPanel = new SingleGameGridPanel();
     private final SingleGameResultPanel gameResultPanel = new SingleGameResultPanel();
 
-    private final EventCommunicator eventCommunicator = new EventCommunicator();
     private final SizeDto size;
-    private final SingleGameEventSetter eventSetter;
 
     public SingleGameView(SizeDto size) {
         setTitle("격자 야구 게임"); // 프레임 제목 설정.
@@ -31,14 +26,13 @@ public class SingleGameView extends JFrame {
         setLayout(null);
 
         this.size = size;
-        eventSetter = new SingleGameEventSetter(eventCommunicator, size, gameRulePanel,
+        SingleGameEventSetter eventSetter = new SingleGameEventSetter(new EventCommunicator(), size, gameRulePanel,
                 gameStatePanel, gameGridPanel, gameResultPanel);
         setComponents();
         setPanel();
         eventSetter.setEvents();
 
         add(gameRulePanel);
-        add(gameTitlePanel);
         add(gameStatePanel);
         add(gameGridPanel);
         add(gameResultPanel);
@@ -47,28 +41,16 @@ public class SingleGameView extends JFrame {
     }
 
     private void setComponents() {
-        // rule
         gameRulePanel.setRuleComponents();
-        // title
-        gameTitlePanel.setTitleComponents();
-        // state
         gameStatePanel.setStateComponents();
-        // grid
         gameGridPanel.setGridComponents(size);
-        // result
         gameResultPanel.setResultComponents();
     }
 
     private void setPanel() {
-        // rule
         gameRulePanel.setRulePanel();
-        // title
-        gameTitlePanel.setTitlePanel();
-        // state
         gameStatePanel.setStatePanel();
-        // grid
         gameGridPanel.setGridPanel(size);
-        // Result
         gameResultPanel.setResultPanel();
     }
 }
