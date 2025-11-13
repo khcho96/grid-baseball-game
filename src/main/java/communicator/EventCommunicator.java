@@ -1,5 +1,6 @@
 package communicator;
 
+import application.Application;
 import controller.SingleGameController;
 import dto.SizeDto;
 
@@ -19,6 +20,10 @@ public class EventCommunicator {
 
     public void selectBattleGame() {
 //        battleGameController.startBattleGame();
+    }
+
+    public void clickBackButton() {
+        Application.main(new String[]{});
     }
 
     public String clickGridButton(int x, int y) {
