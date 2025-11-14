@@ -38,7 +38,7 @@ public class SingleGameEventSetter {
         });
 
         gameStatePanel.getRestartButton().addActionListener(e -> {
-            eventCommunicator.clickRestartButton();
+            eventCommunicator.clickSingleGameRestartButton();
         });
 
         gameRulePanel.getSizeInputTextField().addActionListener(e -> {
@@ -75,7 +75,7 @@ public class SingleGameEventSetter {
                 return;
             }
 
-            String result = eventCommunicator.clickGridButton(x, y);
+            String result = eventCommunicator.clickSingleGameUserGridButton(x, y);
 
             showResultForEachButton(button, result);
 
@@ -90,7 +90,6 @@ public class SingleGameEventSetter {
             gameGridPanel.disableAllGridButtons();
         }
 
-        gameGridPanel.disableGridButton(button);
     }
 
     private void showResultForEachButton(JButton button, String result) {
@@ -103,6 +102,7 @@ public class SingleGameEventSetter {
             gameStatePanel.increaseOutCount();
         }
 
+        gameGridPanel.disableGridButton(button);
         gameStatePanel.updateState();
     }
 
