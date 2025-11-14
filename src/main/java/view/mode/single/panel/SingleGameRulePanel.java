@@ -24,7 +24,7 @@ public class SingleGameRulePanel extends JPanel {
             " 4. 칸을 선택할 때마다 1구씩 증가하며, 최소 투구수로 3아웃을 달성하는 것을 목표로 합니다."
     );
     private final List<JLabel> ruleLabels = new ArrayList<>();
-    private final JLabel sizeInputLabel = new JLabel("격자 크기를 입력해주세요.(3~8) 입력 예) 5");
+    private final JLabel sizeInputLabel = new JLabel("⚾ 격자 크기를 입력해주세요.(3~8) 입력 예) 5");
     private final JTextField sizeInputTextField = new JTextField();
     private final JButton sizeInputButton = new JButton("입력");
     private final JLabel sizeInputResultLabel = new JLabel();
