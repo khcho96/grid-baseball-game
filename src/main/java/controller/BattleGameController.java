@@ -24,15 +24,19 @@ public class BattleGameController {
         SizeDto size = gameService.setInitGame();
         new BattleGameView(size);
     }
-//
-//    public void restartBattleGame() {
-//        SizeDto size = gameService.handleRestartGame();
-//        new SingleGameView(size);
-//    }
-//
-//    public String transferGridButtonEvent(int x, int y) {
-//        return gameService.handleGridButtonEvent(x, y);
-//    }
+
+    public void restartBattleGame() {
+        SizeDto size = gameService.handleRestartGame();
+        new BattleGameView(size);
+    }
+
+    public String transferUserGridButtonEvent(int x, int y) {
+        return gameService.handleUserGridButtonEvent(x, y);
+    }
+
+    public void transferComputerGridButtonEvent(int x, int y) {
+        gameService.handleComputerGridButtonEvent(x, y);
+    }
 //
 //    public SizeDto transferSizeInputEvent(String sizeInput) {
 //        return gameService.handleSizeInputEvent(sizeInput);
