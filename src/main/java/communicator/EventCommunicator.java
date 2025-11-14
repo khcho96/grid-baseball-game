@@ -27,15 +27,27 @@ public class EventCommunicator {
         Application.main(new String[]{});
     }
 
-    public String clickGridButton(int x, int y) {
+    public String clickSingleGameUserGridButton(int x, int y) {
         return singleGameController.transferGridButtonEvent(x, y);
+    }
+
+    public String clickBattleGameUserGridButton(int x, int y) {
+        return battleGameController.transferUserGridButtonEvent(x, y);
+    }
+
+    public void clickBattleGameComputerGridButton(int x, int y) {
+        battleGameController.transferComputerGridButtonEvent(x, y);
     }
 
     public SizeDto inputSizeInText(String sizeInput) {
         return singleGameController.transferSizeInputEvent(sizeInput);
     }
 
-    public void clickRestartButton() {
+    public void clickSingleGameRestartButton() {
         singleGameController.restartSingleGame();
+    }
+
+    public void clickBattleGameRestartButton() {
+        battleGameController.restartBattleGame();
     }
 }
