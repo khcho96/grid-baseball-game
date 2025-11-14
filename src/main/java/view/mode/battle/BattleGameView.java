@@ -12,13 +12,12 @@ import view.mode.battle.panel.BattleGameUserStatePanel;
 
 public class BattleGameView extends JFrame {
 
-    // panel
     private final BattleGameRulePanel gameRulePanel = new BattleGameRulePanel();
-    private final BattleGameMainStatePanel mainStatePanel = new BattleGameMainStatePanel();
     private final BattleGameUserStatePanel userStatePanel = new BattleGameUserStatePanel();
     private final BattleGameUserGridPanel userGridPanel = new BattleGameUserGridPanel();
     private final BattleGameComputerStatePanel computerStatePanel = new BattleGameComputerStatePanel();
     private final BattleGameComputerGridPanel computerGridPanel = new BattleGameComputerGridPanel();
+    private final BattleGameMainStatePanel mainStatePanel = new BattleGameMainStatePanel(userStatePanel, computerStatePanel);
 
     private final SizeDto size;
 
@@ -48,19 +47,19 @@ public class BattleGameView extends JFrame {
 
     private void setComponents() {
         gameRulePanel.setRuleComponents();
-//        mainStatePanel.setMainStateComponents();
-//        userStatePanel.setUserStateComponents();
-//        userGridPanel.setUserGridComponents(size);
-//        computerStatePanel.setUserStateComponents();
-//        computerGridPanel.setUserGridComponents(size);
+        mainStatePanel.setMainStateComponents();
+        userStatePanel.setUserStateComponents();
+        userGridPanel.setUserGridComponents(size);
+        computerStatePanel.setComputerStateComponents();
+        computerGridPanel.setComputerGridComponents(size);
     }
 
     private void setPanel() {
         gameRulePanel.setRulePanel();
-//        mainStatePanel.setMainStatePanel();
-//        userStatePanel.setUserStatePanel();
-//        userGridPanel.setUserGridPanel(size);
-//        computerStatePanel.setUserStatePanel();
-//        computerGridPanel.setUserGridPanel(size);
+        mainStatePanel.setMainStatePanel();
+        userStatePanel.setUserStatePanel();
+        userGridPanel.setUserGridPanel(size);
+        computerStatePanel.setComputerStatePanel();
+        computerGridPanel.setComputerGridPanel(size);
     }
 }
