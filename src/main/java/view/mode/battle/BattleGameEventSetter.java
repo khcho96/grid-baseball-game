@@ -5,7 +5,9 @@ import dto.SizeDto;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.LineBorder;
 import view.mode.battle.panel.BattleGameComputerGridPanel;
 import view.mode.battle.panel.BattleGameComputerStatePanel;
 import view.mode.battle.panel.BattleGameMainStatePanel;
@@ -105,7 +107,9 @@ public class BattleGameEventSetter {
             }
 
             eventCommunicator.clickBattleGameComputerGridButton(x, y);
-            button.setBackground(new Color(251, 192, 192));
+            button.setBackground(new Color(251, 192, 192)); // 원하는 색
+            button.setOpaque(true);                         // 배경색 칠할 수 있게
+            button.setContentAreaFilled(true);              // 기본 배경 그리기 허용
             battleGameComputerStatePanel.increaseSelectedOutCount();
 
             for (ActionListener actionListener : button.getActionListeners()) {
