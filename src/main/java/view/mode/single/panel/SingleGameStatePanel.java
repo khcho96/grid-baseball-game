@@ -12,7 +12,7 @@ public class SingleGameStatePanel extends JPanel {
     private int pitchesCount;
     private int outCount;
     private boolean isGameOver = false;
-    private final JLabel stateLabel = new JLabel("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
+    private final JLabel stateLabel = new JLabel("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
     private final JButton backButton = new JButton("Back ⬅");
     private final JButton restartButton = new JButton("︎Restart 🔄");
 
@@ -29,7 +29,7 @@ public class SingleGameStatePanel extends JPanel {
     }
 
     public void setStateComponents() {
-        ComponentSetter.setComponent(stateLabel, 700, 50, 350, 10, Font.PLAIN,20, Color.BLACK);
+        ComponentSetter.setComponent(stateLabel, 700, 50, 320, 10, Font.PLAIN,20, Color.BLACK);
         ComponentSetter.setComponent(backButton, 120, 40, 150, 10, Font.PLAIN,20, Color.BLACK);
         ComponentSetter.setComponent(restartButton, 120, 40, 630, 10, Font.PLAIN,20, Color.BLACK);
     }
@@ -66,7 +66,7 @@ public class SingleGameStatePanel extends JPanel {
     }
 
     public void updateState() {
-        stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
+        stateLabel.setText("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
     }
 
     public void resetState() {
