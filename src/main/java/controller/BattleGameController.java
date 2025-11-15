@@ -42,8 +42,8 @@ public class BattleGameController {
     public String doRandomlyClickButton(List<Integer> coordinate) {
         return gameService.computeRandomClickResult(coordinate);
     }
-//
-//    public SizeDto transferSizeInputEvent(String sizeInput) {
-//        return gameService.handleSizeInputEvent(sizeInput);
-//    }
+
+    public SizeDto transferSizeInputEvent(String sizeInput) {
+        return gameService.handleSizeInputEvent(sizeInput);
+    }
 }
