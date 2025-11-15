@@ -3,7 +3,6 @@ package view.mode.battle.panel;
 import dto.SizeDto;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -47,20 +46,6 @@ public class BattleGameComputerGridPanel extends JPanel {
                 button.setFont(new Font("돋움", Font.BOLD, 80 / size.size()));
                 gridButtons.get(i).add(button);
             }
-        }
-    }
-
-    public void disableAllGridButtons() {
-        for (List<JButton> gridButton : gridButtons) {
-            for (JButton button : gridButton) {
-                disableGridButton(button);
-            }
-        }
-    }
-
-    public void disableGridButton(JButton button) {
-        for (ActionListener actionListener : button.getActionListeners()) {
-            button.removeActionListener(actionListener);
         }
     }
 }
