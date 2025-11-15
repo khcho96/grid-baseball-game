@@ -90,6 +90,8 @@ public class BattleGameEventSetter {
             showResultForEachButton(button, result);
 
             ShowResultForFinalButton(button);
+
+            battleGameUserGridPanel.setClickable(false);
         });
     }
 
