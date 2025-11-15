@@ -27,7 +27,7 @@ public class BattleGameUserStatePanel extends JPanel {
         return isGameOver;
     }
 
-    public void setGameOver() {
+    public void setGameOverTrue() {
         isGameOver = true;
     }
 
