@@ -120,6 +120,7 @@ public class BattleGameEventSetter {
                         JButton selectedButton = battleGameComputerGridPanel.getButtons().get(randomX).get(randomY);
                         selectedButton.doClick(500);
                         showResultForEachComputerButton(selectedButton, computerResult);
+                        ShowResultForFinalComputerButton(selectedButton);
 
                         if (battleGameMainStatePanel.isGameOver()) {
                             battleGameMainStatePanel.showWinner();
@@ -199,7 +200,7 @@ public class BattleGameEventSetter {
 
         if (result.equals("Out!⚾")) {
             button.setForeground(Color.RED);
-            battleGameUserStatePanel.increaseOutCount();
+                battleGameUserStatePanel.increaseOutCount();
         }
 
         battleGameUserGridPanel.disableGridButton(button);
@@ -208,7 +209,6 @@ public class BattleGameEventSetter {
 
     private void ShowResultForFinalComputerButton(JButton button) {
         if (battleGameComputerStatePanel.isMaxOutCount()) {
-//            battleGameMainStatePanel.showResult(battleGameUserStatePanel.getPitchesCount());
             battleGameComputerStatePanel.setGameOver();
         }
     }
