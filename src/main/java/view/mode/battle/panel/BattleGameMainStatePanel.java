@@ -26,11 +26,9 @@ public class BattleGameMainStatePanel extends JPanel {
     private final JLabel computerSelectLabel1 = new JLabel("컴퓨터가 생각하고 있습니다.");
     private final JLabel computerSelectLabel2 = new JLabel("컴퓨터가 생각하고 있습니다..");
     private final JLabel computerSelectLabel3 = new JLabel("컴퓨터가 생각하고 있습니다...");
-    private final JLabel resultLabel = new JLabel();
-    private final List<String> results = List.of("승리했습니다!! 🎉", "패배했습니다..😭", "비겼습니다 😐");
-    private static final int USER_WIN = 0;
-    private static final int COMPUTER_WIN = 1;
-    private static final int DRAW = 2;
+    private final JLabel userWinResultLabel = new JLabel("승리했습니다!! 🎉");
+    private final JLabel computerWinResultLabel = new JLabel("패배했습니다..😭");
+    private final JLabel drawResultLabel = new JLabel("비겼습니다 😐");
 
     public BattleGameMainStatePanel(BattleGameUserStatePanel battleGameUserStatePanel, BattleGameComputerStatePanel battleGameComputerStatePanel) {
         this.battleGameUserStatePanel = battleGameUserStatePanel;
@@ -83,9 +81,12 @@ public class BattleGameMainStatePanel extends JPanel {
         ComponentSetter.setComponent(computerSelectLabel1, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerSelectLabel2, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerSelectLabel3, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
-        ComponentSetter.setComponent(resultLabel, 350, 30, 80, 35, Font.BOLD, 30, Color.RED);
+        ComponentSetter.setComponent(userWinResultLabel, 350, 30, 75, 35, Font.BOLD, 30, Color.RED);
+        ComponentSetter.setComponent(computerWinResultLabel, 350, 30, 80, 35, Font.BOLD, 30, Color.RED);
+        ComponentSetter.setComponent(drawResultLabel, 350, 30, 90, 35, Font.BOLD, 30, Color.RED);
         setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
-                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3, resultLabel);
+                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3,
+                userWinResultLabel, computerWinResultLabel, drawResultLabel);
     }
 
     public void setMainStatePanel() {
@@ -110,7 +111,9 @@ public class BattleGameMainStatePanel extends JPanel {
         add(computerSelectLabel1);
         add(computerSelectLabel2);
         add(computerSelectLabel3);
-        add(resultLabel);
+        add(userWinResultLabel);
+        add(computerWinResultLabel);
+        add(drawResultLabel);
     }
 
     public boolean isGameOver() {
@@ -130,21 +133,20 @@ public class BattleGameMainStatePanel extends JPanel {
     }
 
     public void showWinner() {
-        int winner = 0;
+        setVisibleFalse(userTurnLabel, userSelectLabel, computerTurnLabel, computerSelectLabel3);
+
         if (battleGameUserStatePanel.isGameOver() && battleGameComputerStatePanel.isGameOver()) {
-            winner = DRAW;
+            setVisibleTrue(drawResultLabel);
+            return;
         }
 
         if (battleGameUserStatePanel.isGameOver()) {
-            winner = USER_WIN;
+            setVisibleTrue(userWinResultLabel);
+            return;
         }
 
         if (battleGameComputerStatePanel.isGameOver()) {
-            winner = COMPUTER_WIN;
+            setVisibleTrue(computerWinResultLabel);
         }
-
-        setVisibleFalse(userTurnLabel, userSelectLabel, computerTurnLabel, computerSelectLabel3);
-        resultLabel.setText(results.get(winner));
-        setVisibleTrue(resultLabel);
     }
 }
