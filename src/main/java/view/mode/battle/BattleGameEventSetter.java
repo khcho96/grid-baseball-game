@@ -93,7 +93,6 @@ public class BattleGameEventSetter {
 
             battleGameUserGridPanel.setClickable(false);
 
-            // TODO: 컴퓨터 차례 메서드 호출
             battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
             battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel1());
             Timer timer1 = new Timer(1000, event1 -> {
@@ -123,7 +122,9 @@ public class BattleGameEventSetter {
                         showResultForEachComputerButton(selectedButton, computerResult);
 
                         if (battleGameMainStatePanel.isGameOver()) {
-
+                            battleGameMainStatePanel.showWinner();
+                            battleGameUserGridPanel.disableAllGridButtons();
+                            return;
                         }
 
                         battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel3());
@@ -186,7 +187,6 @@ public class BattleGameEventSetter {
 
     private void ShowResultForFinalUserButton(JButton button) {
         if (battleGameUserStatePanel.isMaxOutCount()) {
-//            battleGameMainStatePanel.showResult(battleGameUserStatePanel.getPitchesCount());
             battleGameUserStatePanel.setGameOver();
             battleGameUserGridPanel.disableAllGridButtons();
         }
