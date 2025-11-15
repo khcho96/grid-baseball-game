@@ -2,6 +2,8 @@ package view.mode.battle.panel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import view.util.ComponentSetter;
@@ -12,6 +14,7 @@ public class BattleGameComputerStatePanel extends JPanel {
     private int outCount;
     private boolean isGameOver;
     private int selectedOutCount;
+    private final List<List<Integer>> selectedCoordinates = new ArrayList<>();
     private final JLabel titleLabel = new JLabel("컴퓨터 🤖");
     private final JLabel stateLabel = new JLabel("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
 
@@ -70,5 +73,13 @@ public class BattleGameComputerStatePanel extends JPanel {
         pitchesCount = 0;
         outCount = 0;
         updateState();
+    }
+
+    public void addSelectedButton(List<Integer> coordinate) {
+        selectedCoordinates.add(coordinate);
+    }
+
+    public boolean isSelected(List<Integer> coordinate) {
+        return selectedCoordinates.contains(coordinate);
     }
 }
