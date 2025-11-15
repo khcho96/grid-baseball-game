@@ -13,6 +13,7 @@ import view.util.ComponentSetter;
 public class BattleGameUserGridPanel extends JPanel {
 
     private List<List<JButton>> gridButtons;
+    private boolean IS_CLICKABLE;
 
     public List<List<JButton>> getButtons() {
         return List.copyOf(gridButtons);
@@ -62,5 +63,13 @@ public class BattleGameUserGridPanel extends JPanel {
         for (ActionListener actionListener : button.getActionListeners()) {
             button.removeActionListener(actionListener);
         }
+    }
+
+    public boolean isClickable() {
+        return IS_CLICKABLE;
+    }
+
+    public void setClickable(boolean isClickable) {
+        IS_CLICKABLE = isClickable;
     }
 }
