@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -20,7 +21,7 @@ public class BattleGameMainStatePanel extends JPanel {
     private final JLabel gameStartLabel1 = new JLabel("👤 vs 🤖");
     private final JLabel gameStartLabel2 = new JLabel("게임을 시작합니다!");
     private final JLabel userTurnLabel = new JLabel("👤");
-    private final JLabel userSelectLabel = new JLabel("칸 하나를 선택하세요");
+    private final JLabel userSelectLabel = new JLabel("내 차례입니다. 칸 하나를 선택하세요");
     private final JLabel computerTurnLabel = new JLabel("🤖");
     private final JLabel computerSelectLabel1 = new JLabel("컴퓨터가 생각하고 있습니다.");
     private final JLabel computerSelectLabel2 = new JLabel("컴퓨터가 생각하고 있습니다..");
@@ -73,16 +74,18 @@ public class BattleGameMainStatePanel extends JPanel {
     }
 
     public void setMainStateComponents() {
-        ComponentSetter.setComponent(outZoneSelectLabel, 350, 30, 12, 50, Font.BOLD, 16, Color.BLACK);
+        ComponentSetter.setComponent(outZoneSelectLabel, 350, 30, 14, 50, Font.BOLD, 16, Color.BLACK);
         ComponentSetter.setComponent(gameStartLabel1, 350, 30, 125, 15, Font.BOLD, 25, Color.BLACK);
         ComponentSetter.setComponent(gameStartLabel2, 350, 30, 100, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(userTurnLabel, 350, 30, 165, 15, Font.BOLD, 25, Color.BLACK);
-        ComponentSetter.setComponent(userSelectLabel, 350, 30, 95, 50, Font.BOLD, 20, Color.BLACK);
+        ComponentSetter.setComponent(userSelectLabel, 350, 30, 30, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerTurnLabel, 350, 30, 165, 15, Font.BOLD, 25, Color.BLACK);
         ComponentSetter.setComponent(computerSelectLabel1, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerSelectLabel2, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerSelectLabel3, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(resultLabel, 350, 30, 80, 35, Font.BOLD, 30, Color.RED);
+        setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
+                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3, resultLabel);
     }
 
     public void setMainStatePanel() {
@@ -112,5 +115,17 @@ public class BattleGameMainStatePanel extends JPanel {
 
     public boolean isGameOver() {
         return battleGameUserStatePanel.isGameOver() || battleGameComputerStatePanel.isGameOver();
+    }
+
+    public void setVisibleTrue(JComponent... components) {
+        for (JComponent component : components) {
+            component.setVisible(true);
+        }
+    }
+
+    public void setVisibleFalse(JComponent... components) {
+        for (JComponent component : components) {
+            component.setVisible(false);
+        }
     }
 }
