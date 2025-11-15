@@ -58,13 +58,13 @@ public class BattleGameEventSetter {
             eventCommunicator.clickBattleGameRestartButton();
         });
 
-//        battleGameRulePanel.getSizeInputTextField().addActionListener(e -> {
-//            setEventOfSizeInput();
-//        });
-//
-//        battleGameRulePanel.getSizeInputButton().addActionListener(e -> {
-//            setEventOfSizeInput();
-//        });
+        battleGameRulePanel.getSizeInputTextField().addActionListener(e -> {
+            setEventOfSizeInput();
+        });
+
+        battleGameRulePanel.getSizeInputButton().addActionListener(e -> {
+            setEventOfSizeInput();
+        });
     }
 
     private void setEventOfUserGridButtons() {
@@ -227,22 +227,25 @@ public class BattleGameEventSetter {
     }
 
     private void setEventOfSizeInput() {
-//        changeGridSize();
+        changeGridSize();
         battleGameUserGridPanel.setUserGridComponents(size);
+        battleGameUserGridPanel.setUserGridPanel(size);
         battleGameComputerGridPanel.setComputerGridComponents(size);
+        battleGameComputerGridPanel.setComputerGridPanel(size);
         setEventOfUserGridButtons();
+        setEventOfComputerGridButtons();
         battleGameUserStatePanel.resetState();
         battleGameComputerStatePanel.resetState();
     }
-//    private void changeGridSize() {
-//        String sizeInput = gameRulePanel.getInputText();
-//        try {
-//            size = eventCommunicator.inputSizeInText(sizeInput);
-//        } catch (IllegalArgumentException error) {
-//            gameRulePanel.showErrorMessage(error);
-//            return;
-//        }
-//        gameRulePanel.showSuccessMessage(size.size());
 
-//    }
+    private void changeGridSize() {
+        String sizeInput = battleGameRulePanel.getInputText();
+        try {
+            size = eventCommunicator.inputSizeInTextForBattleGame(sizeInput);
+        } catch (IllegalArgumentException error) {
+            battleGameRulePanel.showErrorMessage(error);
+            return;
+        }
+        battleGameRulePanel.showSuccessMessage(size.size());
+    }
 }
