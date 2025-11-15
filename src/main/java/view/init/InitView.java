@@ -43,8 +43,4 @@ public class InitView extends JFrame {
         singleButton.setFocusPainted(false); // 포커스 하이라이트 숨김
         battleButton.setFocusPainted(false); // 포커스 하이라이트 숨김
     }
-
-    public static void main(String[] args) {
-        new InitView();
-    }
 }
