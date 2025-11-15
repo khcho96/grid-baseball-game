@@ -80,9 +80,9 @@ public class BattleGameMainStatePanel extends JPanel {
         ComponentSetter.setComponent(userTurnLabel, 350, 30, 165, 15, Font.BOLD, 25, Color.BLACK);
         ComponentSetter.setComponent(userSelectLabel, 350, 30, 30, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(computerTurnLabel, 350, 30, 165, 15, Font.BOLD, 25, Color.BLACK);
-        ComponentSetter.setComponent(computerSelectLabel1, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
-        ComponentSetter.setComponent(computerSelectLabel2, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
-        ComponentSetter.setComponent(computerSelectLabel3, 350, 30, 65, 50, Font.BOLD, 20, Color.BLACK);
+        ComponentSetter.setComponent(computerSelectLabel1, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
+        ComponentSetter.setComponent(computerSelectLabel2, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
+        ComponentSetter.setComponent(computerSelectLabel3, 350, 30, 60, 50, Font.BOLD, 20, Color.BLACK);
         ComponentSetter.setComponent(resultLabel, 350, 30, 80, 35, Font.BOLD, 30, Color.RED);
         setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
                 computerSelectLabel1, computerSelectLabel2, computerSelectLabel3, resultLabel);
