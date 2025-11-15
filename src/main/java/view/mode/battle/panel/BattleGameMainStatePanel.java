@@ -128,4 +128,23 @@ public class BattleGameMainStatePanel extends JPanel {
             component.setVisible(false);
         }
     }
+
+    public void showWinner() {
+        int winner = 0;
+        if (battleGameUserStatePanel.isGameOver() && battleGameComputerStatePanel.isGameOver()) {
+            winner = DRAW;
+        }
+
+        if (battleGameUserStatePanel.isGameOver()) {
+            winner = USER_WIN;
+        }
+
+        if (battleGameComputerStatePanel.isGameOver()) {
+            winner = COMPUTER_WIN;
+        }
+
+        setVisibleFalse(userTurnLabel, userSelectLabel, computerTurnLabel, computerSelectLabel3);
+        resultLabel.setText(results.get(winner));
+        setVisibleTrue(resultLabel);
+    }
 }
