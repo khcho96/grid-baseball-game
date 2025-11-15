@@ -49,13 +49,11 @@ public class BattleGameService {
 
     public SizeDto handleSizeInputEvent(String sizeInput) {
         size = Size.newInstance(sizeInput);
-        changeSize();
-        return SizeDto.newInstance(size.getSize());
-    }
-
-    private void changeSize() {
         userGridButtons = GridButtons.from(size);
+        computerGridButtons = GridButtons.from(size);
         setUserOutZones();
+        outCoordinates = new ArrayList<>();
+        return SizeDto.newInstance(size.getSize());
     }
 
     public SizeDto handleRestartGame() {
