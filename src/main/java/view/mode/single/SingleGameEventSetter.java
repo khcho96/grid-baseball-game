@@ -109,7 +109,7 @@ public class SingleGameEventSetter {
     private void changeGridSize() {
         String sizeInput = gameRulePanel.getInputText();
         try {
-            size = eventCommunicator.inputSizeInText(sizeInput);
+            size = eventCommunicator.inputSizeInTextForSingleGame(sizeInput);
         } catch (IllegalArgumentException error) {
             gameRulePanel.showErrorMessage(error);
             return;
