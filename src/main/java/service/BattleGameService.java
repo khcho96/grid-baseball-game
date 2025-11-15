@@ -15,7 +15,7 @@ public class BattleGameService {
     private OutZone userOutZone;
     private OutZone computerOutZone;
     private Size size;
-    private final List<List<Integer>> outCoordinates = new ArrayList<>();
+    private List<List<Integer>> outCoordinates = new ArrayList<>();
 
     public SizeDto setInitGame() {
         size = Size.newInstance("5");
@@ -60,6 +60,7 @@ public class BattleGameService {
 
     public SizeDto handleRestartGame() {
         setUserOutZones();
+        outCoordinates = new ArrayList<>();
         return SizeDto.newInstance(size.getSize());
     }
 
