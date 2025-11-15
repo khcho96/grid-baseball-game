@@ -31,7 +31,7 @@ public class BattleGameComputerStatePanel extends JPanel {
         return isGameOver;
     }
 
-    public void setGameOver() {
+    public void setGameOverTrue() {
         isGameOver = true;
     }
 
@@ -66,7 +66,7 @@ public class BattleGameComputerStatePanel extends JPanel {
     }
 
     public void updateState() {
-        stateLabel.setText("현재 투구 수: " + pitchesCount + "    아웃: " + outCount);
+        stateLabel.setText("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
     }
 
     public void resetState() {
