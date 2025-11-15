@@ -44,8 +44,12 @@ public class EventCommunicator {
         return battleGameController.doRandomlyClickButton(coordinate);
     }
 
-    public SizeDto inputSizeInText(String sizeInput) {
+    public SizeDto inputSizeInTextForSingleGame(String sizeInput) {
         return singleGameController.transferSizeInputEvent(sizeInput);
+    }
+
+    public SizeDto inputSizeInTextForBattleGame(String sizeInput) {
+        return battleGameController.transferSizeInputEvent(sizeInput);
     }
 
     public void clickSingleGameRestartButton() {
