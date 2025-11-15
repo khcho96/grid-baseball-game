@@ -5,9 +5,8 @@ import dto.SizeDto;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
+import javax.swing.Timer;
 import view.mode.battle.panel.BattleGameComputerGridPanel;
 import view.mode.battle.panel.BattleGameComputerStatePanel;
 import view.mode.battle.panel.BattleGameMainStatePanel;
@@ -107,9 +106,9 @@ public class BattleGameEventSetter {
             }
 
             eventCommunicator.clickBattleGameComputerGridButton(x, y);
-            button.setBackground(new Color(251, 192, 192)); // 원하는 색
-            button.setOpaque(true);                         // 배경색 칠할 수 있게
-            button.setContentAreaFilled(true);              // 기본 배경 그리기 허용
+            button.setBackground(new Color(251, 192, 192));
+            button.setOpaque(true); // 배경색 칠할 수 있게
+            button.setContentAreaFilled(true); // 기본 배경 그리기 허용
             battleGameComputerStatePanel.increaseSelectedOutCount();
 
             for (ActionListener actionListener : button.getActionListeners()) {
@@ -117,7 +116,16 @@ public class BattleGameEventSetter {
             }
 
             if (battleGameComputerStatePanel.isSelectionComplete()) {
+                battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getOutZoneSelectLabel());
+                battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getGameStartLabel2());
 
+                Timer timer = new Timer(2000, event -> {
+                    // 2초 뒤에 하고 싶은 작업
+                    battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getGameStartLabel2());
+                    battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+                });
+                timer.setRepeats(false); // 한 번만 실행
+                timer.start();
             }
         });
     }
