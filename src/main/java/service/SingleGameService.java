@@ -6,7 +6,7 @@ import domain.GridButtons;
 import domain.OutZone;
 import domain.vo.Size;
 import dto.SizeDto;
-import generator.RandomOutGenerator;
+import generator.RandomGenerator;
 
 public class SingleGameService {
 
@@ -24,7 +24,7 @@ public class SingleGameService {
     private void setOutZones() {
         List<List<Integer>> outCoordinates = new ArrayList<>();
         while (outCoordinates.size() < 3) {
-            List<Integer> outCoordinate = RandomOutGenerator.generateOutZoneCoordinate(size);
+            List<Integer> outCoordinate = RandomGenerator.generateOutZoneCoordinate(size);
             if (!outCoordinates.contains(outCoordinate)) {
                 outCoordinates.add(outCoordinate);
             }
