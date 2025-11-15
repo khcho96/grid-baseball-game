@@ -77,6 +77,10 @@ public class BattleGameEventSetter {
 
     private void setEventOfUserGridButton(JButton button, int x, int y) {
         button.addActionListener(e -> {
+            if (!battleGameUserGridPanel.isClickable()) {
+                return;
+            }
+
             if (battleGameMainStatePanel.isGameOver()) {
                 return;
             }
@@ -126,6 +130,8 @@ public class BattleGameEventSetter {
                 });
                 timer.setRepeats(false); // 한 번만 실행
                 timer.start();
+
+                battleGameUserGridPanel.setClickable(true);
             }
         });
     }
