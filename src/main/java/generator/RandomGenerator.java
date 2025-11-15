@@ -7,7 +7,7 @@ import domain.vo.Size;
 
 public final class RandomGenerator {
 
-    private RandomGenerator() {};
+    private RandomGenerator() {}
 
     public static List<Integer> generateOutZoneCoordinate(Size size) {
         Random random = new Random();
