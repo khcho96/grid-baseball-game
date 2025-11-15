@@ -1,7 +1,9 @@
 package view.mode.battle;
 
 import communicator.EventCommunicator;
+import domain.vo.Size;
 import dto.SizeDto;
+import generator.RandomGenerator;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -85,13 +87,57 @@ public class BattleGameEventSetter {
                 return;
             }
 
-            String result = eventCommunicator.clickBattleGameUserGridButton(x, y);
-
-            showResultForEachButton(button, result);
-
-            ShowResultForFinalButton(button);
+            String userResult = eventCommunicator.clickBattleGameUserGridButton(x, y);
+            showResultForEachUserButton(button, userResult);
+            ShowResultForFinalUserButton(button);
 
             battleGameUserGridPanel.setClickable(false);
+
+            // TODO: 컴퓨터 차례 메서드 호출
+            battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+            battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel1());
+            Timer timer1 = new Timer(1000, event1 -> {
+                battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerSelectLabel1());
+                battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerSelectLabel2());
+
+                Timer timer2 = new Timer(1000, event2 -> {
+                    battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerSelectLabel2());
+                    battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerSelectLabel3());
+
+                    Timer timer3 = new Timer(1000, event3 -> {
+
+                        List<Integer> coordinate;
+                        while (true) {
+                            coordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
+                            if (!battleGameComputerStatePanel.isSelected(coordinate)) {
+                                battleGameComputerStatePanel.addSelectedButton(coordinate);
+                                break;
+                            }
+                        }
+
+                        int randomX = coordinate.get(0);
+                        int randomY = coordinate.get(1);
+                        String computerResult = eventCommunicator.doRandomlyClickButton(coordinate);
+                        JButton selectedButton = battleGameComputerGridPanel.getButtons().get(randomX).get(randomY);
+                        selectedButton.doClick(500);
+                        showResultForEachComputerButton(selectedButton, computerResult);
+
+                        if (battleGameMainStatePanel.isGameOver()) {
+
+                        }
+
+                        battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel3());
+                        battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+                        battleGameUserGridPanel.setClickable(true);
+                    });
+                    timer3.setRepeats(false); // 한 번만 실행
+                    timer3.start();
+                });
+                timer2.setRepeats(false); // 한 번만 실행
+                timer2.start();
+            });
+            timer1.setRepeats(false); // 한 번만 실행
+            timer1.start();
         });
     }
 
@@ -138,7 +184,7 @@ public class BattleGameEventSetter {
         });
     }
 
-    private void ShowResultForFinalButton(JButton button) {
+    private void ShowResultForFinalUserButton(JButton button) {
         if (battleGameUserStatePanel.isMaxOutCount()) {
 //            battleGameMainStatePanel.showResult(battleGameUserStatePanel.getPitchesCount());
             battleGameUserStatePanel.setGameOver();
@@ -146,7 +192,7 @@ public class BattleGameEventSetter {
         }
     }
 
-    private void showResultForEachButton(JButton button, String result) {
+    private void showResultForEachUserButton(JButton button, String result) {
         button.setText(result);
         button.setForeground(Color.BLUE);
         battleGameUserStatePanel.increasePitchesCount();
@@ -158,6 +204,26 @@ public class BattleGameEventSetter {
 
         battleGameUserGridPanel.disableGridButton(button);
         battleGameUserStatePanel.updateState();
+    }
+
+    private void ShowResultForFinalComputerButton(JButton button) {
+        if (battleGameComputerStatePanel.isMaxOutCount()) {
+//            battleGameMainStatePanel.showResult(battleGameUserStatePanel.getPitchesCount());
+            battleGameComputerStatePanel.setGameOver();
+        }
+    }
+
+    private void showResultForEachComputerButton(JButton button, String result) {
+        button.setText(result);
+        button.setForeground(Color.BLUE);
+        battleGameComputerStatePanel.increasePitchesCount();
+
+        if (result.equals("Out!⚾")) {
+            button.setForeground(Color.RED);
+            battleGameComputerStatePanel.increaseOutCount();
+        }
+
+        battleGameComputerStatePanel.updateState();
     }
 
     private void setEventOfSizeInput() {
