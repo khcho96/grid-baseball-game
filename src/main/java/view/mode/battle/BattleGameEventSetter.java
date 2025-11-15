@@ -188,7 +188,7 @@ public class BattleGameEventSetter {
 
     private void ShowResultForFinalUserButton(JButton button) {
         if (battleGameUserStatePanel.isMaxOutCount()) {
-            battleGameUserStatePanel.setGameOver();
+            battleGameUserStatePanel.setGameOverTrue();
             battleGameUserGridPanel.disableAllGridButtons();
         }
     }
@@ -209,7 +209,7 @@ public class BattleGameEventSetter {
 
     private void ShowResultForFinalComputerButton(JButton button) {
         if (battleGameComputerStatePanel.isMaxOutCount()) {
-            battleGameComputerStatePanel.setGameOver();
+            battleGameComputerStatePanel.setGameOverTrue();
         }
     }
 
