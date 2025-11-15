@@ -118,7 +118,7 @@ public class BattleGameEventSetter {
                         int randomY = coordinate.get(1);
                         String computerResult = eventCommunicator.doRandomlyClickButton(coordinate);
                         JButton selectedButton = battleGameComputerGridPanel.getButtons().get(randomX).get(randomY);
-                        selectedButton.doClick(500);
+                        selectedButton.doClick(200);
                         showResultForEachComputerButton(selectedButton, computerResult);
                         ShowResultForFinalComputerButton(selectedButton);
 
