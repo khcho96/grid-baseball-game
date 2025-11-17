@@ -84,9 +84,6 @@ public class BattleGameMainStatePanel extends JPanel {
         ComponentSetter.setComponent(userWinResultLabel, 350, 30, 75, 35, Font.BOLD, 30, Color.RED);
         ComponentSetter.setComponent(computerWinResultLabel, 350, 30, 80, 35, Font.BOLD, 30, Color.RED);
         ComponentSetter.setComponent(drawResultLabel, 350, 30, 90, 35, Font.BOLD, 30, Color.RED);
-        setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
-                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3,
-                userWinResultLabel, computerWinResultLabel, drawResultLabel);
     }
 
     public void setMainStatePanel() {
@@ -114,6 +111,9 @@ public class BattleGameMainStatePanel extends JPanel {
         add(userWinResultLabel);
         add(computerWinResultLabel);
         add(drawResultLabel);
+        setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
+                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3,
+                userWinResultLabel, computerWinResultLabel, drawResultLabel);
     }
 
     public boolean isGameOver() {
@@ -148,5 +148,12 @@ public class BattleGameMainStatePanel extends JPanel {
         if (battleGameComputerStatePanel.isGameOver()) {
             setVisibleTrue(computerWinResultLabel);
         }
+    }
+
+    public void restartGame() {
+        setVisibleTrue(outZoneSelectLabel);
+        setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
+                computerSelectLabel1, computerSelectLabel2, computerSelectLabel3,
+                userWinResultLabel, computerWinResultLabel, drawResultLabel);
     }
 }
