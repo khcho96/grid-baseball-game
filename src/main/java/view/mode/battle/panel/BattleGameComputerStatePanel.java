@@ -14,13 +14,9 @@ public class BattleGameComputerStatePanel extends JPanel {
     private int outCount;
     private boolean isGameOver;
     private int selectedOutCount;
-    private final List<List<Integer>> selectedCoordinates = new ArrayList<>();
+    private List<List<Integer>> selectedCoordinates = new ArrayList<>();
     private final JLabel titleLabel = new JLabel("컴퓨터 🤖");
     private final JLabel stateLabel = new JLabel("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
-
-    public int getPitchesCount() {
-        return pitchesCount;
-    }
 
     public void setComputerStateComponents() {
         ComponentSetter.setComponent(titleLabel, 550, 30, 215, 15, Font.BOLD, 25, Color.BLACK);
@@ -72,6 +68,8 @@ public class BattleGameComputerStatePanel extends JPanel {
     public void resetState() {
         pitchesCount = 0;
         outCount = 0;
+        selectedOutCount = 0;
+        selectedCoordinates = new ArrayList<>();
         updateState();
     }
 
