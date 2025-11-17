@@ -177,11 +177,10 @@ public class BattleGameEventSetter {
                     // 2초 뒤에 하고 싶은 작업
                     battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getGameStartLabel2());
                     battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+                    battleGameUserGridPanel.setClickable(true);
                 });
                 timer.setRepeats(false); // 한 번만 실행
                 timer.start();
-
-                battleGameUserGridPanel.setClickable(true);
             }
         });
     }
@@ -227,7 +226,14 @@ public class BattleGameEventSetter {
     }
 
     private void setEventOfSizeInput() {
-        changeGridSize();
+        try {
+            changeGridSize();
+        } catch (IllegalArgumentException error) {
+            battleGameRulePanel.showErrorMessage(error);
+            return;
+        }
+        battleGameRulePanel.showSuccessMessage(size.size());
+
         battleGameUserGridPanel.setUserGridComponents(size);
         battleGameUserGridPanel.setUserGridPanel(size);
         battleGameComputerGridPanel.setComputerGridComponents(size);
@@ -236,16 +242,11 @@ public class BattleGameEventSetter {
         setEventOfComputerGridButtons();
         battleGameUserStatePanel.resetState();
         battleGameComputerStatePanel.resetState();
+        battleGameMainStatePanel.restartGame();
     }
 
     private void changeGridSize() {
         String sizeInput = battleGameRulePanel.getInputText();
-        try {
-            size = eventCommunicator.inputSizeInTextForBattleGame(sizeInput);
-        } catch (IllegalArgumentException error) {
-            battleGameRulePanel.showErrorMessage(error);
-            return;
-        }
-        battleGameRulePanel.showSuccessMessage(size.size());
+        size = eventCommunicator.inputSizeInTextForBattleGame(sizeInput);
     }
 }
