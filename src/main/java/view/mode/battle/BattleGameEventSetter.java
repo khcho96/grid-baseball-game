@@ -107,17 +107,22 @@ public class BattleGameEventSetter {
 
                         List<Integer> coordinate;
                         while (true) {
-                            coordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
+//                            coordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
+                            coordinate = eventCommunicator.getSmartCoordinate();
                             if (!battleGameComputerStatePanel.isSelected(coordinate)) {
                                 battleGameComputerStatePanel.addSelectedButton(coordinate);
                                 break;
                             }
                         }
 
-                        int randomX = coordinate.get(0);
-                        int randomY = coordinate.get(1);
-                        String computerResult = eventCommunicator.doRandomlyClickButton(coordinate);
-                        JButton selectedButton = battleGameComputerGridPanel.getButtons().get(randomX).get(randomY);
+//                        int randomX = coordinate.get(0);
+//                        int randomY = coordinate.get(1);
+//                        String computerResult = eventCommunicator.doRandomlyClickButton(coordinate);
+                        int smartX = coordinate.get(0);
+                        int smartY = coordinate.get(1);
+                        String computerResult = eventCommunicator.doSmartClickButton(coordinate);
+
+                        JButton selectedButton = battleGameComputerGridPanel.getButtons().get(smartX).get(smartY);
                         selectedButton.doClick(200);
                         showResultForEachComputerButton(selectedButton, computerResult);
                         ShowResultForFinalComputerButton(selectedButton);
@@ -128,8 +133,14 @@ public class BattleGameEventSetter {
                             return;
                         }
 
-                        battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel3());
-                        battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+                        battleGameMainStatePanel.setVisibleFalse(
+                                battleGameMainStatePanel.getComputerTurnLabel(),
+                                battleGameMainStatePanel.getComputerSelectLabel3()
+                        );
+                        battleGameMainStatePanel.setVisibleTrue(
+                                battleGameMainStatePanel.getUserTurnLabel(),
+                                battleGameMainStatePanel.getUserSelectLabel()
+                        );
                         battleGameUserGridPanel.setClickable(true);
                     });
                     timer3.setRepeats(false); // 한 번만 실행

@@ -59,4 +59,12 @@ public class EventCommunicator {
     public void clickBattleGameRestartButton() {
         battleGameController.restartBattleGame();
     }
+
+    public List<Integer> getSmartCoordinate() {
+        return battleGameController.getSmartCoordinate();
+    }
+
+    public String doSmartClickButton(List<Integer> coordinate) {
+        return battleGameController.doSmartClickButton(coordinate);
+    }
 }

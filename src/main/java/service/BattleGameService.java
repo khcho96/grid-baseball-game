@@ -2,6 +2,8 @@ package service;
 
 import domain.GridButtons;
 import domain.OutZone;
+import domain.SmartComputer;
+import domain.vo.Coordinate;
 import domain.vo.Size;
 import dto.SizeDto;
 import generator.RandomGenerator;
@@ -16,6 +18,7 @@ public class BattleGameService {
     private OutZone computerOutZone;
     private Size size;
     private List<List<Integer>> outCoordinates = new ArrayList<>();
+    private SmartComputer smartComputer;
 
     public SizeDto setInitGame() {
         size = Size.newInstance("5");
@@ -64,5 +67,23 @@ public class BattleGameService {
 
     public String computeRandomClickResult(List<Integer> coordinate) {
         return computerGridButtons.computeEventResult(coordinate.get(0), coordinate.get(1), computerOutZone);
+    }
+
+    public List<Integer> computeSmartCoordinate() {
+        if (smartComputer == null) {
+            return RandomGenerator.generateCoordinate(size);
+        }
+        Coordinate c = smartComputer.nextGuess();
+        return List.of(c.getX(), c.getY());
+    }
+
+    public String computeSmartClickResult(List<Integer> coordinate) {
+        int x = coordinate.get(0);
+        int y = coordinate.get(1);
+        String result = computerGridButtons.computeEventResult(x, y, computerOutZone);
+        if (smartComputer != null) {
+            smartComputer.recordResult(new Coordinate(x, y), result);
+        }
+        return result;
     }
 }

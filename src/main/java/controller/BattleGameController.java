@@ -46,4 +46,12 @@ public class BattleGameController {
     public SizeDto transferSizeInputEvent(String sizeInput) {
         return gameService.handleSizeInputEvent(sizeInput);
     }
+
+    public List<Integer> getSmartCoordinate() {
+        return gameService.computeSmartCoordinate();
+    }
+
+    public String doSmartClickButton(List<Integer> coordinate) {
+        return gameService.computeSmartClickResult(coordinate);
+    }
 }
