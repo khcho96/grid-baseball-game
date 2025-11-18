@@ -1,7 +1,10 @@
 package domain;
 
+import domain.vo.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OutZone {
 
@@ -26,5 +29,13 @@ public class OutZone {
             }
         }
         return false;
+    }
+
+    public boolean containsForCoordinates(Set<Coordinate> candidates) {
+        Set<Coordinate> outZones = this.outZones.stream()
+                .map(GridButton::getCoordinate)
+                .collect(Collectors.toSet());
+
+       return outZones.retainAll(candidates);
     }
 }

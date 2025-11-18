@@ -25,7 +25,6 @@ public class BattleGameService {
         userGridButtons = GridButtons.from(size);
         computerGridButtons = GridButtons.from(size);
         outCoordinates = new ArrayList<>();
-        smartComputer = new SmartComputer(size.getSize());
         setUserOutZones();
         return SizeDto.newInstance(Integer.parseInt("5"));
     }
@@ -49,6 +48,7 @@ public class BattleGameService {
         outCoordinates.add(List.of(x, y));
         if (outCoordinates.size() == 3) {
             computerOutZone = OutZone.of(outCoordinates);
+            smartComputer = new SmartComputer(size.getSize(), computerOutZone);
         }
     }
 
@@ -58,14 +58,12 @@ public class BattleGameService {
         computerGridButtons = GridButtons.from(size);
         setUserOutZones();
         outCoordinates = new ArrayList<>();
-        smartComputer = new SmartComputer(size.getSize());
         return SizeDto.newInstance(size.getSize());
     }
 
     public SizeDto handleRestartGame() {
         setUserOutZones();
         outCoordinates = new ArrayList<>();
-        smartComputer = new SmartComputer(size.getSize());
         return SizeDto.newInstance(size.getSize());
     }
 

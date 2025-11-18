@@ -1,5 +1,9 @@
 package domain;
 
+import domain.vo.Coordinate;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GridButton {
 
     private final int coordinateX;
@@ -21,5 +25,9 @@ public class GridButton {
         }
         GridButton that = (GridButton) o;
         return coordinateX == that.coordinateX && coordinateY == that.coordinateY;
+    }
+
+    public Coordinate getCoordinate() {
+        return new Coordinate(coordinateX, coordinateY);
     }
 }

@@ -17,12 +17,14 @@ public class SmartComputer {
     private final Set<Coordinate> outConfirmed;
     private final Set<Coordinate> unselectedCandidates;
     private List<Set<Coordinate>> outCandidates;
+    private final OutZone outZone;
 
-    public SmartComputer(int size) {
+    public SmartComputer(int size, OutZone outZone) {
         this.size = size;
         outConfirmed = new HashSet<>();
         unselectedCandidates = generateAllCandidates();
         outCandidates = new ArrayList<>();
+        this.outZone = outZone;
     }
 
     private Set<Coordinate> generateAllCandidates() {
@@ -40,20 +42,16 @@ public class SmartComputer {
         Map<Coordinate, Integer> priority = new HashMap<>();
 
         for (Set<Coordinate> outCandidate : outCandidates) {
-            if (!outCandidate.isEmpty()) {
-                for (Coordinate coordinate : outCandidate) {
+            for (Coordinate coordinate : outCandidate) {
+                if (!priority.containsKey(coordinate)) {
                     priority.put(coordinate, 0);
 
                     Iterator<Coordinate> neighbors = coordinate.getNeighbors(size);
                     while (neighbors.hasNext()) {
                         Coordinate neighbor = neighbors.next();
 
-                        // 미선택 리스트 요소인지 확인
                         if (unselectedCandidates.contains(neighbor)) {
-                            priority.put(
-                                    coordinate,
-                                    priority.get(coordinate) + 1
-                            );
+                            priority.put(coordinate, priority.get(coordinate) + 1);
                         }
                     }
                 }
@@ -61,30 +59,28 @@ public class SmartComputer {
         }
 
         if (!priority.isEmpty()) {
-            return getNextCoordinateForUnselectedCandidates(priority);
+            return getNextCoordinateForCandidates(priority);
         }
 
         for (Coordinate unselectedCandidate : unselectedCandidates) {
-            priority.put(unselectedCandidate, 0);
+            if (!priority.containsKey(unselectedCandidate)) {
+                priority.put(unselectedCandidate, 0);
 
-            Iterator<Coordinate> neighbors = unselectedCandidate.getNeighbors(size);
-            while (neighbors.hasNext()) {
-                Coordinate neighbor = neighbors.next();
+                Iterator<Coordinate> neighbors = unselectedCandidate.getNeighbors(size);
+                while (neighbors.hasNext()) {
+                    Coordinate neighbor = neighbors.next();
 
-                // 미선택 리스트 요소인지 확인
-                if (unselectedCandidates.contains(neighbor)) {
-                    priority.put(
-                            unselectedCandidate,
-                            priority.get(unselectedCandidate) + 1
-                    );
+                    if (unselectedCandidates.contains(neighbor)) {
+                        priority.put(unselectedCandidate, priority.get(unselectedCandidate) + 1);
+                    }
                 }
             }
         }
 
-        return getNextCoordinateForUnselectedCandidates(priority);
+        return getNextCoordinateForCandidates(priority);
     }
 
-    private Coordinate getNextCoordinateForUnselectedCandidates(Map<Coordinate, Integer> priority) {
+    private Coordinate getNextCoordinateForCandidates(Map<Coordinate, Integer> priority) {
         List<Coordinate> nextCoordinates = new ArrayList<>();
         int maxUnselectedCandidatesCount = 0;
 
@@ -118,35 +114,41 @@ public class SmartComputer {
             return;
         }
 
+        // 아웃이 아닌 경우
         for (Set<Coordinate> outCandidate : outCandidates) {
             outCandidate.remove(selectedCoordinate);
         }
 
-        // 아웃이 아닌 경우
-        // HTML 태그를 제거하고 "1S 2B"와 같은 형태로 파싱
+        List<Set<Coordinate>> newOutCandidates = new ArrayList<>();
+
         String stripped = result.replaceAll("<[^>]*>", "").strip();
         String[] parts = stripped.split(" ");
         int strike = Integer.parseInt(parts[0].replace("S", "").strip());
         int ball = Integer.parseInt(parts[1].replace("B", "").strip());
+
         if (strike == 0) {
             filterCandidatesFromNoStrike(selectedCoordinate);
         } else {
-            updateOutCandidatesFromStrike(selectedCoordinate, strike);
+            updateOutCandidatesFromStrike(newOutCandidates, selectedCoordinate, strike);
         }
+
         if (ball == 0) {
             filterCandidatesFromNoBall(selectedCoordinate);
         } else {
-            updateOutCandidatesFromBall(selectedCoordinate, ball);
+            updateOutCandidatesFromBall(newOutCandidates, selectedCoordinate, ball);
+        }
+
+        if (!newOutCandidates.isEmpty()) {
+            mergeFinalOutCandidates(newOutCandidates);
         }
     }
 
-    private void updateOutCandidatesFromStrike(Coordinate selectedCoordinate, int strike) {
-        List<Set<Coordinate>> newOutCandidates = new ArrayList<>();
+    private void updateOutCandidatesFromStrike(List<Set<Coordinate>> newOutCandidates, Coordinate strikeCoordinate, int strike) {
         for (int i = 0; i < strike; i++) {
             newOutCandidates.add(new HashSet<>());
         }
 
-        Set<Coordinate> strikeZones = selectedCoordinate.getStrikeZones(size);
+        Set<Coordinate> strikeZones = strikeCoordinate.getStrikeZones(size);
         for (Coordinate strikeZone : strikeZones) {
             if (outConfirmed.contains(strikeZone)) {
                 newOutCandidates.removeFirst();
@@ -165,63 +167,14 @@ public class SmartComputer {
             }
             unselectedCandidates.removeIf(strikeZones::contains);
         }
-
-        mergeFinalOutCandidates(newOutCandidates);
     }
 
-    private void mergeFinalOutCandidates(List<Set<Coordinate>> newOutCandidates) {
-        List<Set<Coordinate>> finalOutCandidates = new ArrayList<>();
-        Set<List<Set<Coordinate>>> pairs = new HashSet<>();
-
-        for (Set<Coordinate> outCandidate : outCandidates) {
-            if (outCandidate.isEmpty()) continue;
-
-            boolean disjointWithAll = newOutCandidates.stream()
-                    .allMatch(newOutCandidate -> Collections.disjoint(outCandidate,
-                            newOutCandidate)); // 모든 newOutCandidate와 비겹치는지 확인
-            if (disjointWithAll) {
-                finalOutCandidates.add(new HashSet<>(Set.copyOf(outCandidate)));
-                continue;
-            }
-
-            for (Set<Coordinate> newOutCandidate : newOutCandidates) {
-                if (!Collections.disjoint(outCandidate, newOutCandidate)) {
-                    pairs.add(List.of(outCandidate, newOutCandidate));
-                }
-            }
-        }
-        for (Set<Coordinate> newOutCandidate : newOutCandidates) {
-            boolean disjointWithAll = outCandidates.stream()
-                    .allMatch(outCandidate -> Collections.disjoint(newOutCandidate,
-                            outCandidate)); // 모든 outCandidate와 비겹치는지 확인
-            if (disjointWithAll) {
-                finalOutCandidates.add(new HashSet<>(Set.copyOf(newOutCandidate)));
-            }
-
-            for (Set<Coordinate> outCandidate : outCandidates) {
-                if (!Collections.disjoint(newOutCandidate, outCandidate)) {
-                    pairs.add(List.of(outCandidate, newOutCandidate));
-                }
-            }
-        }
-
-//        for (List<Set<Coordinate>> pair : pairs) {
-//            Set<Coordinate> pre = pair.get(0);
-//            Set<Coordinate> next = pair.get(1);
-//
-//
-//        }
-
-//        outCandidates = new ArrayList<>(finalOutCandidates);
-    }
-
-    private void updateOutCandidatesFromBall(Coordinate selectedCoordinate, int ball) {
-        List<Set<Coordinate>> newOutCandidates = new ArrayList<>();
+    private void updateOutCandidatesFromBall(List<Set<Coordinate>> newOutCandidates, Coordinate ballCoordinate, int ball) {
         for (int i = 0; i < ball; i++) {
             newOutCandidates.add(new HashSet<>());
         }
 
-        Set<Coordinate> ballZones = selectedCoordinate.getBallZones(size);
+        Set<Coordinate> ballZones = ballCoordinate.getBallZones(size);
         for (Coordinate ballZone : ballZones) {
             if (outConfirmed.contains(ballZone)) {
                 newOutCandidates.removeFirst();
@@ -242,15 +195,96 @@ public class SmartComputer {
         }
     }
 
-    private void filterCandidatesFromOut(Coordinate selectedCoordinate) {
-        if (outCandidates.isEmpty() || !outCandidatesContain(selectedCoordinate)) {
+    private void mergeFinalOutCandidates(List<Set<Coordinate>> newOutCandidates) {
+        List<Set<Coordinate>> finalOutCandidates = new ArrayList<>();
+        Set<List<Set<Coordinate>>> pairs = new HashSet<>();
+
+        for (Set<Coordinate> outCandidate : outCandidates) {
+            if (outCandidate.isEmpty()) {
+                continue;
+            }
+
+            boolean disjointWithAll = newOutCandidates.stream()
+                    .allMatch(newOutCandidate -> Collections.disjoint(outCandidate, newOutCandidate));
+            if (disjointWithAll) {
+                finalOutCandidates.add(new HashSet<>(Set.copyOf(outCandidate)));
+                continue;
+            }
+
+            for (Set<Coordinate> newOutCandidate : newOutCandidates) {
+                if (!Collections.disjoint(outCandidate, newOutCandidate)) {
+                    pairs.add(List.of(outCandidate, newOutCandidate));
+                }
+            }
+        }
+        for (Set<Coordinate> newOutCandidate : newOutCandidates) {
+            boolean disjointWithAll = outCandidates.stream()
+                    .allMatch(outCandidate -> Collections.disjoint(newOutCandidate, outCandidate));
+            if (disjointWithAll) {
+                finalOutCandidates.add(new HashSet<>(Set.copyOf(newOutCandidate)));
+            }
+
+            for (Set<Coordinate> outCandidate : outCandidates) {
+                if (!Collections.disjoint(newOutCandidate, outCandidate)) {
+                    pairs.add(List.of(outCandidate, newOutCandidate));
+                }
+            }
+        }
+
+        for (List<Set<Coordinate>> pair : pairs) {
+            Set<Coordinate> pre = pair.get(0);
+            Set<Coordinate> cur = pair.get(1);
+
+            if (finalOutCandidates.size() == 2 || pre.containsAll(cur)) {
+                pre.retainAll(cur);
+                finalOutCandidates.add(pre);
+                continue;
+            }
+
+            Set<Coordinate> candidates;
+            Set<Coordinate> preDiff = new HashSet<>(pre);
+            Set<Coordinate> curDiff = new HashSet<>(cur);
+            Set<Coordinate> intersect = new HashSet<>(pre);
+
+            preDiff.removeAll(cur);
+            curDiff.removeAll(pre);
+            candidates = new HashSet<>(preDiff);
+            candidates.addAll(curDiff);
+            if (outZone.containsForCoordinates(candidates)) {
+                finalOutCandidates.add(preDiff);
+                finalOutCandidates.add(curDiff);
+            }
+
+            intersect.retainAll(cur);
+            if (outZone.containsForCoordinates(intersect)) {
+                finalOutCandidates.add(intersect);
+            }
+        }
+
+        outCandidates = finalOutCandidates;
+    }
+
+    private void filterCandidatesFromOut(Coordinate outCoordinate) {
+        if (outCandidates.isEmpty() || !outCandidatesContain(outCoordinate)) {
             outCandidates.add(new HashSet<>());
             return;
         }
 
         for (Set<Coordinate> outCandidate : outCandidates) {
-            outCandidate.remove(selectedCoordinate);
-            outCandidate.removeIf(coordinate -> outCandidatesContainCountOf(coordinate) > 1);
+            if (outCandidate.contains(outCoordinate)) {
+                outCandidate.remove(outCoordinate);
+                for (Set<Coordinate> candidate : outCandidates) {
+                    candidate.remove(outCoordinate);
+                }
+
+                for (Coordinate coordinate : outCandidate) {
+                    if (outCandidatesContainCountOf(coordinate) <= 1) {
+                        unselectedCandidates.remove(coordinate);
+                    }
+                }
+                outCandidate.clear();
+                break;
+            }
         }
     }
 
@@ -270,17 +304,16 @@ public class SmartComputer {
         unselectedCandidates.removeIf(ballZones::contains);
     }
 
-    private boolean outCandidatesContain(Coordinate selectedCoordinate) {
+    private boolean outCandidatesContain(Coordinate outCoordinate) {
         return !outCandidates.stream()
-                .filter(outCandidate -> outCandidate.contains(selectedCoordinate))
+                .filter(outCandidate -> outCandidate.contains(outCoordinate))
                 .toList()
                 .isEmpty();
     }
 
     private int outCandidatesContainCountOf(Coordinate selectedCoordinate) {
-        return outCandidates.stream()
+        return (int) outCandidates.stream()
                 .filter(outCandidate -> outCandidate.contains(selectedCoordinate))
-                .toList()
-                .size();
+                .count();
     }
 }
