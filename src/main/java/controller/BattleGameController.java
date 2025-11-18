@@ -1,5 +1,6 @@
 package controller;
 
+import domain.vo.Coordinate;
 import dto.SizeDto;
 import java.util.List;
 import service.BattleGameService;
@@ -47,11 +48,11 @@ public class BattleGameController {
         return gameService.handleSizeInputEvent(sizeInput);
     }
 
-    public List<Integer> getSmartCoordinate() {
+    public Coordinate getSmartCoordinate() {
         return gameService.computeSmartCoordinate();
     }
 
-    public String doSmartClickButton(List<Integer> coordinate) {
+    public String doSmartClickButton(Coordinate coordinate) {
         return gameService.computeSmartClickResult(coordinate);
     }
 }

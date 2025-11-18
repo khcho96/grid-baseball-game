@@ -1,6 +1,7 @@
 package view.mode.battle;
 
 import communicator.EventCommunicator;
+import domain.vo.Coordinate;
 import domain.vo.Size;
 import dto.SizeDto;
 import generator.RandomGenerator;
@@ -105,9 +106,9 @@ public class BattleGameEventSetter {
 
                     Timer timer3 = new Timer(1000, event3 -> {
 
-                        List<Integer> coordinate;
+                        Coordinate coordinate;
                         while (true) {
-//                            coordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
+//                            List<Integer> oldCoordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
                             coordinate = eventCommunicator.getSmartCoordinate();
                             if (!battleGameComputerStatePanel.isSelected(coordinate)) {
                                 battleGameComputerStatePanel.addSelectedButton(coordinate);
@@ -115,14 +116,12 @@ public class BattleGameEventSetter {
                             }
                         }
 
-//                        int randomX = coordinate.get(0);
-//                        int randomY = coordinate.get(1);
-//                        String computerResult = eventCommunicator.doRandomlyClickButton(coordinate);
-                        int smartX = coordinate.get(0);
-                        int smartY = coordinate.get(1);
+//                        int randomX = oldCoordinate.get(0);
+//                        int randomY = oldCoordinate.get(1);
+//                        String computerResult = eventCommunicator.doRandomlyClickButton(oldCoordinate);
                         String computerResult = eventCommunicator.doSmartClickButton(coordinate);
 
-                        JButton selectedButton = battleGameComputerGridPanel.getButtons().get(smartX).get(smartY);
+                        JButton selectedButton = battleGameComputerGridPanel.getButtons().get(coordinate.getX()).get(coordinate.getY());
                         selectedButton.doClick(200);
                         showResultForEachComputerButton(selectedButton, computerResult);
                         ShowResultForFinalComputerButton(selectedButton);

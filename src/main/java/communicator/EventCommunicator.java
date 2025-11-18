@@ -3,6 +3,7 @@ package communicator;
 import application.Application;
 import controller.BattleGameController;
 import controller.SingleGameController;
+import domain.vo.Coordinate;
 import dto.SizeDto;
 import java.util.List;
 
@@ -60,11 +61,11 @@ public class EventCommunicator {
         battleGameController.restartBattleGame();
     }
 
-    public List<Integer> getSmartCoordinate() {
+    public Coordinate getSmartCoordinate() {
         return battleGameController.getSmartCoordinate();
     }
 
-    public String doSmartClickButton(List<Integer> coordinate) {
+    public String doSmartClickButton(Coordinate coordinate) {
         return battleGameController.doSmartClickButton(coordinate);
     }
 }

@@ -17,13 +17,15 @@ public class BattleGameService {
     private OutZone userOutZone;
     private OutZone computerOutZone;
     private Size size;
-    private List<List<Integer>> outCoordinates = new ArrayList<>();
+    private List<List<Integer>> outCoordinates;
     private SmartComputer smartComputer;
 
     public SizeDto setInitGame() {
         size = Size.newInstance("5");
         userGridButtons = GridButtons.from(size);
         computerGridButtons = GridButtons.from(size);
+        outCoordinates = new ArrayList<>();
+        smartComputer = new SmartComputer(size.getSize());
         setUserOutZones();
         return SizeDto.newInstance(Integer.parseInt("5"));
     }
@@ -56,12 +58,14 @@ public class BattleGameService {
         computerGridButtons = GridButtons.from(size);
         setUserOutZones();
         outCoordinates = new ArrayList<>();
+        smartComputer = new SmartComputer(size.getSize());
         return SizeDto.newInstance(size.getSize());
     }
 
     public SizeDto handleRestartGame() {
         setUserOutZones();
         outCoordinates = new ArrayList<>();
+        smartComputer = new SmartComputer(size.getSize());
         return SizeDto.newInstance(size.getSize());
     }
 
@@ -69,21 +73,15 @@ public class BattleGameService {
         return computerGridButtons.computeEventResult(coordinate.get(0), coordinate.get(1), computerOutZone);
     }
 
-    public List<Integer> computeSmartCoordinate() {
-        if (smartComputer == null) {
-            return RandomGenerator.generateCoordinate(size);
-        }
-        Coordinate c = smartComputer.nextGuess();
-        return List.of(c.getX(), c.getY());
+    public Coordinate computeSmartCoordinate() {
+        return smartComputer.nextGuess();
     }
 
-    public String computeSmartClickResult(List<Integer> coordinate) {
-        int x = coordinate.get(0);
-        int y = coordinate.get(1);
+    public String computeSmartClickResult(Coordinate coordinate) {
+        int x = coordinate.getX();
+        int y = coordinate.getY();
         String result = computerGridButtons.computeEventResult(x, y, computerOutZone);
-        if (smartComputer != null) {
-            smartComputer.recordResult(new Coordinate(x, y), result);
-        }
+        smartComputer.recordResult(coordinate, result);
         return result;
     }
 }
