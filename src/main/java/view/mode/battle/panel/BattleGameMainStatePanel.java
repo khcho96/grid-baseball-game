@@ -2,7 +2,6 @@ package view.mode.battle.panel;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;

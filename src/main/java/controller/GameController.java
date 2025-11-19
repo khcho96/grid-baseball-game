@@ -4,7 +4,6 @@ import view.init.InitView;
 
 public class GameController {
 
-    private static GameController isExist;
     private final SingleGameController singleGameController;
     private final BattleGameController battleGameController;
 
