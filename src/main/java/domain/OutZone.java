@@ -31,11 +31,12 @@ public class OutZone {
         return false;
     }
 
-    public boolean containsForCoordinates(Set<Coordinate> candidates) {
+    public int computeContainingOutCount(Set<Coordinate> candidates) {
         Set<Coordinate> outZones = this.outZones.stream()
                 .map(GridButton::getCoordinate)
                 .collect(Collectors.toSet());
+       outZones.retainAll(candidates);
 
-       return outZones.retainAll(candidates);
+       return outZones.size();
     }
 }

@@ -129,21 +129,35 @@ public class SmartComputer {
         if (strike == 0) {
             filterCandidatesFromNoStrike(selectedCoordinate);
         } else {
-            updateOutCandidatesFromStrike(newOutCandidates, selectedCoordinate, strike);
+            List<Set<Coordinate>> newCandidates = updateOutCandidatesFromStrike(selectedCoordinate, strike);
+            newOutCandidates.addAll(newCandidates);
         }
 
         if (ball == 0) {
             filterCandidatesFromNoBall(selectedCoordinate);
         } else {
-            updateOutCandidatesFromBall(newOutCandidates, selectedCoordinate, ball);
+            List<Set<Coordinate>> newCandidates = updateOutCandidatesFromBall(selectedCoordinate, ball);
+            newOutCandidates.addAll(newCandidates);
         }
 
         if (!newOutCandidates.isEmpty()) {
+            filterIfOutCandidateSizeThree(newOutCandidates);
             mergeFinalOutCandidates(newOutCandidates);
         }
     }
 
-    private void updateOutCandidatesFromStrike(List<Set<Coordinate>> newOutCandidates, Coordinate strikeCoordinate, int strike) {
+    private void filterIfOutCandidateSizeThree(List<Set<Coordinate>> newOutCandidates) {
+        if (outCandidates.size() == 3) {
+            for (Set<Coordinate> newOutCandidate : newOutCandidates) {
+                newOutCandidate.removeIf(coordinate -> !outCandidatesContain(coordinate));
+            }
+            unselectedCandidates.removeIf(coordinate -> !outCandidatesContain(coordinate));
+        }
+    }
+
+    private List<Set<Coordinate>> updateOutCandidatesFromStrike(Coordinate strikeCoordinate, int strike) {
+        List<Set<Coordinate>> newOutCandidates = new ArrayList<>();
+
         for (int i = 0; i < strike; i++) {
             newOutCandidates.add(new HashSet<>());
         }
@@ -167,9 +181,13 @@ public class SmartComputer {
             }
             unselectedCandidates.removeIf(strikeZones::contains);
         }
+
+        return newOutCandidates;
     }
 
-    private void updateOutCandidatesFromBall(List<Set<Coordinate>> newOutCandidates, Coordinate ballCoordinate, int ball) {
+    private List<Set<Coordinate>> updateOutCandidatesFromBall(Coordinate ballCoordinate, int ball) {
+        List<Set<Coordinate>> newOutCandidates = new ArrayList<>();
+
         for (int i = 0; i < ball; i++) {
             newOutCandidates.add(new HashSet<>());
         }
@@ -193,11 +211,18 @@ public class SmartComputer {
             }
             unselectedCandidates.removeIf(ballZones::contains);
         }
+
+        return newOutCandidates;
     }
 
     private void mergeFinalOutCandidates(List<Set<Coordinate>> newOutCandidates) {
         List<Set<Coordinate>> finalOutCandidates = new ArrayList<>();
         Set<List<Set<Coordinate>>> pairs = new HashSet<>();
+
+        if (outCandidates.isEmpty()) {
+            outCandidates = new ArrayList<>(newOutCandidates);
+            return;
+        }
 
         for (Set<Coordinate> outCandidate : outCandidates) {
             if (outCandidate.isEmpty()) {
@@ -235,29 +260,28 @@ public class SmartComputer {
             Set<Coordinate> pre = pair.get(0);
             Set<Coordinate> cur = pair.get(1);
 
-            if (finalOutCandidates.size() == 2 || pre.containsAll(cur)) {
-                pre.retainAll(cur);
-                finalOutCandidates.add(pre);
-                continue;
-            }
-
-            Set<Coordinate> candidates;
             Set<Coordinate> preDiff = new HashSet<>(pre);
             Set<Coordinate> curDiff = new HashSet<>(cur);
             Set<Coordinate> intersect = new HashSet<>(pre);
 
             preDiff.removeAll(cur);
             curDiff.removeAll(pre);
-            candidates = new HashSet<>(preDiff);
-            candidates.addAll(curDiff);
-            if (outZone.containsForCoordinates(candidates)) {
-                finalOutCandidates.add(preDiff);
-                finalOutCandidates.add(curDiff);
+            intersect.retainAll(cur);
+
+            int preDiffOutCount = outZone.computeContainingOutCount(preDiff);
+            int curDiffOutCount = outZone.computeContainingOutCount(curDiff);
+            int intersectOutCount = outZone.computeContainingOutCount(intersect);
+
+            for (int i = 0; i < preDiffOutCount; i++) {
+                finalOutCandidates.add(new HashSet<>(preDiff));
             }
 
-            intersect.retainAll(cur);
-            if (outZone.containsForCoordinates(intersect)) {
-                finalOutCandidates.add(intersect);
+            for (int i = 0; i < curDiffOutCount; i++) {
+                finalOutCandidates.add(new HashSet<>(curDiff));
+            }
+
+            for (int i = 0; i < intersectOutCount; i++) {
+                finalOutCandidates.add(new HashSet<>(intersect));
             }
         }
 

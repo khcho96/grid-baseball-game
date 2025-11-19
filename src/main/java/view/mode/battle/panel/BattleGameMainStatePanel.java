@@ -151,7 +151,7 @@ public class BattleGameMainStatePanel extends JPanel {
     }
 
     public void restartGame() {
-        setVisibleTrue(outZoneSelectLabel);
+        setVisibleTrue(outZoneSelectLabel, userTurnLabel);
         setVisibleFalse(gameStartLabel1, gameStartLabel2, userSelectLabel, computerTurnLabel,
                 computerSelectLabel1, computerSelectLabel2, computerSelectLabel3,
                 userWinResultLabel, computerWinResultLabel, drawResultLabel);

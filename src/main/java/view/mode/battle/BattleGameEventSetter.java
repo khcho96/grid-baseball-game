@@ -2,9 +2,7 @@ package view.mode.battle;
 
 import communicator.EventCommunicator;
 import domain.vo.Coordinate;
-import domain.vo.Size;
 import dto.SizeDto;
-import generator.RandomGenerator;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
