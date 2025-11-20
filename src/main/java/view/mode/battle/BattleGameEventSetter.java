@@ -92,8 +92,8 @@ public class BattleGameEventSetter {
 
             battleGameUserGridPanel.setClickable(false);
 
-            battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
-            battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerTurnLabel(), battleGameMainStatePanel.getComputerSelectLabel1());
+            battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnIcon(), battleGameMainStatePanel.getUserSelectLabel());
+            battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerTurnIcon(), battleGameMainStatePanel.getComputerSelectLabel1());
             Timer timer1 = new Timer(1000, event1 -> {
                 battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerSelectLabel1());
                 battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerSelectLabel2());
@@ -131,11 +131,11 @@ public class BattleGameEventSetter {
                         }
 
                         battleGameMainStatePanel.setVisibleFalse(
-                                battleGameMainStatePanel.getComputerTurnLabel(),
+                                battleGameMainStatePanel.getComputerTurnIcon(),
                                 battleGameMainStatePanel.getComputerSelectLabel3()
                         );
                         battleGameMainStatePanel.setVisibleTrue(
-                                battleGameMainStatePanel.getUserTurnLabel(),
+                                battleGameMainStatePanel.getUserTurnIcon(),
                                 battleGameMainStatePanel.getUserSelectLabel()
                         );
                         battleGameUserGridPanel.setClickable(true);
@@ -178,13 +178,15 @@ public class BattleGameEventSetter {
             }
 
             if (battleGameComputerStatePanel.isSelectionComplete()) {
-                battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getOutZoneSelectLabel());
-                battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getGameStartLabel2());
+                battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnIcon(), battleGameMainStatePanel.getOutZoneSelectLabel());
+                battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getLeftGameStartLabel1Icon(),
+                        battleGameMainStatePanel.getRightGameStartLabel1Icon(),  battleGameMainStatePanel.getGameStartLabel2());
 
                 Timer timer = new Timer(2000, event -> {
                     // 2초 뒤에 하고 싶은 작업
-                    battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getGameStartLabel2());
-                    battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnLabel(), battleGameMainStatePanel.getUserSelectLabel());
+                    battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getGameStartLabel1(), battleGameMainStatePanel.getLeftGameStartLabel1Icon(),
+                            battleGameMainStatePanel.getRightGameStartLabel1Icon(), battleGameMainStatePanel.getGameStartLabel2());
+                    battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnIcon(), battleGameMainStatePanel.getUserSelectLabel());
                     battleGameUserGridPanel.setClickable(true);
                 });
                 timer.setRepeats(false); // 한 번만 실행

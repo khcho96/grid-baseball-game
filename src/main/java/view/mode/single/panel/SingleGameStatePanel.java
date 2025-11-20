@@ -2,9 +2,11 @@ package view.mode.single.panel;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import view.util.ComponentSetter;
 
 public class SingleGameStatePanel extends JPanel {
@@ -14,7 +16,7 @@ public class SingleGameStatePanel extends JPanel {
     private boolean isGameOver = false;
     private final JLabel stateLabel = new JLabel("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
     private final JButton backButton = new JButton("Back ⬅");
-    private final JButton restartButton = new JButton("︎Restart 🔄");
+    private final JButton restartButton = new JButton("︎Restart");
 
     public JButton getBackButton() {
         return backButton;
@@ -54,8 +56,17 @@ public class SingleGameStatePanel extends JPanel {
         return outCount == 3;
     }
 
+    private void setIcons() {
+        ImageIcon restart = ComponentSetter.loadIcon(this, "/icon/restart.png", 20, 20);
+
+        restartButton.setIcon(restart);
+        restartButton.setHorizontalTextPosition(SwingConstants.LEFT);
+        restartButton.setIconTextGap(5);
+    }
+
     public void setStatePanel() {
         ComponentSetter.setPanel(this, 950, 50, 550, 50, null);
+        setIcons();
         addComponents();
     }
 

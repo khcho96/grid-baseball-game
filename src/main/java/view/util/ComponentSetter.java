@@ -2,7 +2,11 @@ package view.util;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.LayoutManager;
+import java.net.URL;
+import java.util.Objects;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -27,5 +31,15 @@ public final class ComponentSetter {
         panel.setSize(width, height);
         panel.setLocation(x, y);
         panel.setLayout(layout);
+    }
+
+    public static ImageIcon loadIcon(Object object, String path, int width, int height) {
+        URL url = Objects.requireNonNull(object.getClass().getResource(path));
+        ImageIcon originalIcon = new ImageIcon(url);
+
+        Image scaledImage = originalIcon.getImage()
+                .getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(scaledImage);
     }
 }

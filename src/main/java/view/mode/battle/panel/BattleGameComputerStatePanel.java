@@ -5,8 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import view.util.ComponentSetter;
 
 public class BattleGameComputerStatePanel extends JPanel {
@@ -16,7 +18,7 @@ public class BattleGameComputerStatePanel extends JPanel {
     private boolean isGameOver;
     private int selectedOutCount;
     private List<Coordinate> selectedCoordinates = new ArrayList<>();
-    private final JLabel titleLabel = new JLabel("컴퓨터 🤖");
+    private final JLabel titleLabel = new JLabel("컴퓨터");
     private final JLabel stateLabel = new JLabel("⚾ 현재 투구 수: " + pitchesCount + "    ⭕ 아웃: " + outCount);
 
     public void setComputerStateComponents() {
@@ -52,8 +54,17 @@ public class BattleGameComputerStatePanel extends JPanel {
         selectedOutCount++;
     }
 
+    private void setIcons() {
+        ImageIcon robot = ComponentSetter.loadIcon(this, "/icon/robot.png", 25, 25);
+
+        titleLabel.setIcon(robot);
+        titleLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        titleLabel.setIconTextGap(5);
+    }
+
     public void setComputerStatePanel() {
         ComponentSetter.setPanel(this, 500, 100, 950, 200, null);
+        setIcons();
         addComponents();
     }
 
