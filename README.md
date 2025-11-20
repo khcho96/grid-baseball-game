@@ -1,10 +1,14 @@
 # 🎯 프리코스 오픈 미션 과제 - 격자 야구 게임
 
-
 ## 🕹️ 게임 이용 방법 🕹️
 > 1. 코드 zip 파일을 로컬에 다운로드합니다.
 > 2. 사용하시는 IDE로 다운받은 파일을 엽니다.
 > 3. `Application`을 실행하여 게임을 진행합니다.
+
+## 💻 게임 화면 💻 ##
+<img width="600" height="400" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/53dc5cdd-dac4-4730-a76a-cc93e8ccdaa3" />
+<img width="600" height="400" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/1e308675-e336-49b5-8086-6f8355c34044" />
+<img width="600" height="400" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/7e6790b9-e6c6-40b2-8890-072ee46fdafd" />
 
 ## 🚀 기능 구현 목록
 > - 내용이 추가 또는 수정될 수 있다.
