@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="domain.OutZoneTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-11-20T08:30:39.451Z" hostname="Kyeonghyeonui-MacBookPro.local" time="0.003">
+<testsuite name="domain.OutZoneTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-11-20T12:17:12.643Z" hostname="Kyeonghyeonui-MacBookPro.local" time="0.003">
   <properties/>
   <testcase name="[1] 0, 0, false" classname="domain.OutZoneTest" time="0.0"/>
-  <testcase name="[2] 0, 1, true" classname="domain.OutZoneTest" time="0.001"/>
-  <testcase name="[3] 1, 1, false" classname="domain.OutZoneTest" time="0.0"/>
-  <testcase name="[4] 2, 1, true" classname="domain.OutZoneTest" time="0.001"/>
-  <testcase name="[5] 2, 2, true" classname="domain.OutZoneTest" time="0.0"/>
-  <testcase name="[6] 2, 3, false" classname="domain.OutZoneTest" time="0.001"/>
+  <testcase name="[2] 0, 1, true" classname="domain.OutZoneTest" time="0.0"/>
+  <testcase name="[3] 1, 1, false" classname="domain.OutZoneTest" time="0.001"/>
+  <testcase name="[4] 2, 1, true" classname="domain.OutZoneTest" time="0.0"/>
+  <testcase name="[5] 2, 2, true" classname="domain.OutZoneTest" time="0.001"/>
+  <testcase name="[6] 2, 3, false" classname="domain.OutZoneTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

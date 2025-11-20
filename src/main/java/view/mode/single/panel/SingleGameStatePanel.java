@@ -33,7 +33,7 @@ public class SingleGameStatePanel extends JPanel {
     public void setStateComponents() {
         ComponentSetter.setComponent(stateLabel, 700, 50, 320, 10, Font.PLAIN,20, Color.BLACK);
         ComponentSetter.setComponent(backButton, 120, 40, 150, 10, Font.PLAIN,20, Color.BLACK);
-        ComponentSetter.setComponent(restartButton, 120, 40, 630, 10, Font.PLAIN,20, Color.BLACK);
+        ComponentSetter.setComponent(restartButton, 150, 40, 600, 10, Font.PLAIN,20, Color.BLACK);
     }
 
     public boolean isGameOver() {

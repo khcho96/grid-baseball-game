@@ -85,7 +85,7 @@ public class BattleGameRulePanel extends JPanel {
         setRuleLabels();
         setHowToPlayLabels();
         ComponentSetter.setComponent(backButton, 120, 40, 1050, 10, Font.PLAIN,20, Color.BLACK);
-        ComponentSetter.setComponent(restartButton, 120, 40, 1350, 10, Font.PLAIN,20, Color.BLACK);
+        ComponentSetter.setComponent(restartButton, 150, 40, 1310, 10, Font.PLAIN,20, Color.BLACK);
         ComponentSetter.setComponent(sizeInputLabel, 500, 20, 1050, 100, Font.BOLD, 18, Color.BLACK);
         ComponentSetter.setComponent(sizeInputTextField, 200, 30, 1050, 130);
         ComponentSetter.setComponent(sizeInputButton, 70, 30, 1250, 130, Font.BOLD,15, Color.BLACK);

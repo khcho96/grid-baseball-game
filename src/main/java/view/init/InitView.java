@@ -31,7 +31,7 @@ public class InitView extends JFrame {
 
         InitEventSetter eventSetter = new InitEventSetter(new EventCommunicator(), singleButton, battleButton);
 
-//        setIcons();
+        setIcons();
         setComponents();
         eventSetter.setEvents();
 
