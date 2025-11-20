@@ -1,7 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
 }
-repositories { mavenCentral() }
+
+group = 'grid-baseball-game'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
 
 java {
     toolchain {
@@ -9,8 +16,23 @@ java {
     }
 }
 
+application {
+    mainClass = 'application.Application'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'application.Application'
+        )
+    }
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
     testImplementation 'org.assertj:assertj-core:3.26.3'
 }
-test { useJUnitPlatform() }
+
+test {
+    useJUnitPlatform()
+}

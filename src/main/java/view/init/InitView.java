@@ -18,7 +18,7 @@ public class InitView extends JFrame {
     public InitView() {
         setTitle("격자 야구 게임");
         setSize(1500, 900); // 프레임의 크기 설정.
-        setResizable(true); // 프레임의 크기 변경 못하게 설정.
+        setResizable(false); // 프레임의 크기 변경 못하게 설정.
         setDefaultCloseOperation(EXIT_ON_CLOSE); // 프레임의 x버튼 누르면 종료;
         setLayout(null);
 

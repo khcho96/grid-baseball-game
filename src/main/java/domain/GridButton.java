@@ -1,8 +1,6 @@
 package domain;
 
 import domain.vo.Coordinate;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GridButton {
 
