@@ -42,24 +42,17 @@ public class CoordinateTDD {
     }
 
     public Set<CoordinateTDD> getStrikeZones(int size) {
-        Set<CoordinateTDD> neighbors = new HashSet<>();
-
-        for (List<Integer> zone : strikeZones) {
-            int x = this.x + zone.get(0);
-            int y = this.y + zone.get(1);
-            if (x < 0 || y < 0 || x >= size || y >= size) {
-                continue;
-            }
-            neighbors.add(new CoordinateTDD(x, y));
-        }
-
-        return neighbors;
+        return getZones(size, strikeZones);
     }
 
     public Set<CoordinateTDD> getBallZones(int size) {
+        return getZones(size, ballZones);
+    }
+
+    private Set<CoordinateTDD> getZones(int size, List<List<Integer>> zones) {
         Set<CoordinateTDD> neighbors = new HashSet<>();
 
-        for (List<Integer> zone : ballZones) {
+        for (List<Integer> zone : zones) {
             int x = this.x + zone.get(0);
             int y = this.y + zone.get(1);
             if (x < 0 || y < 0 || x >= size || y >= size) {
