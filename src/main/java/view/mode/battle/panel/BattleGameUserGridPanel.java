@@ -44,7 +44,7 @@ public class BattleGameUserGridPanel extends JPanel {
             gridButtons.add(new ArrayList<>());
             for (int j = 0; j < size.size(); j++) {
                 JButton button = new JButton();
-                button.setFocusPainted(false); // 포커스 하이라이트 숨김
+                button.setFocusPainted(false);
                 button.setFont(new Font("돋움", Font.BOLD, 80 / size.size()));
                 gridButtons.get(i).add(button);
             }

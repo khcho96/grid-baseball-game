@@ -117,11 +117,11 @@ public class BattleGameMainStatePanel extends JPanel {
     public void setMainStatePanel() {
         ComponentSetter.setPanel(this, 350, 100, 570, 325, null);
         Border padded = BorderFactory.createCompoundBorder(
-                new LineBorder(new Color(0x0669bf), 2, true), // 색, 두께, 모서리 라운드
-                new EmptyBorder(6, 10, 6, 10)                 // 안쪽 여백(위,좌,아,우)
+                new LineBorder(new Color(0x0669bf), 2, true),
+                new EmptyBorder(6, 10, 6, 10)
         );
         setBorder(padded);
-        setOpaque(true);                 // 배경 칠하려면
+        setOpaque(true);
         setBackground(Color.WHITE);
         setIcons();
         addComponents();

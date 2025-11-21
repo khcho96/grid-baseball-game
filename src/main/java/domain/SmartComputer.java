@@ -94,7 +94,6 @@ public class SmartComputer {
         return nextCoordinates.getFirst();
     }
 
-    // 좌표 선택 결과를 받아서 처리하는 로직
     public void recordResult(Coordinate selectedCoordinate, String result) {
         unselectedCandidates.remove(selectedCoordinate);
 
@@ -104,7 +103,6 @@ public class SmartComputer {
             return;
         }
 
-        // 아웃이 아닌 경우
         RemoveInOutCandidates(selectedCoordinate);
 
         List<Set<Coordinate>> newOutCandidates = new ArrayList<>();

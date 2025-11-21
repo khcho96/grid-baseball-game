@@ -2,12 +2,7 @@ package view.mode.battle;
 
 import communicator.EventCommunicator;
 import dto.SizeDto;
-import java.awt.Image;
-import java.net.URL;
-import java.util.Objects;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.SwingConstants;
 import view.mode.battle.panel.BattleGameComputerGridPanel;
 import view.mode.battle.panel.BattleGameComputerStatePanel;
 import view.mode.battle.panel.BattleGameMainStatePanel;

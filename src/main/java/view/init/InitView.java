@@ -68,7 +68,7 @@ public class InitView extends JFrame {
         ComponentSetter.setComponent(modeRightIconLabel, 20, 30, 865, 250, Font.BOLD, 25, Color.BLACK);
         ComponentSetter.setComponent(singleButton, 150, 50, 685, 320, Font.BOLD, 15, Color.BLACK);
         ComponentSetter.setComponent(battleButton, 150, 50, 685, 380, Font.BOLD, 15, Color.BLACK);
-        singleButton.setFocusPainted(false); // 포커스 하이라이트 숨김
-        battleButton.setFocusPainted(false); // 포커스 하이라이트 숨김
+        singleButton.setFocusPainted(false);
+        battleButton.setFocusPainted(false);
     }
 }

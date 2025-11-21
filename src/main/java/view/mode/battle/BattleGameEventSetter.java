@@ -137,13 +137,13 @@ public class BattleGameEventSetter {
                         );
                         battleGameUserGridPanel.setClickable(true);
                     });
-                    timer3.setRepeats(false); // 한 번만 실행
+                    timer3.setRepeats(false);
                     timer3.start();
                 });
-                timer2.setRepeats(false); // 한 번만 실행
+                timer2.setRepeats(false);
                 timer2.start();
             });
-            timer1.setRepeats(false); // 한 번만 실행
+            timer1.setRepeats(false);
             timer1.start();
         });
     }
