@@ -95,15 +95,15 @@ public class BattleGameEventSetter {
 
             battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getUserTurnIcon(), battleGameMainStatePanel.getUserSelectLabel());
             battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerTurnIcon(), battleGameMainStatePanel.getComputerSelectLabel1());
-            Timer timer1 = new Timer(1000, event1 -> {
+            Timer timer1 = new Timer(500, event1 -> {
                 battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerSelectLabel1());
                 battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerSelectLabel2());
 
-                Timer timer2 = new Timer(1000, event2 -> {
+                Timer timer2 = new Timer(500, event2 -> {
                     battleGameMainStatePanel.setVisibleFalse(battleGameMainStatePanel.getComputerSelectLabel2());
                     battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getComputerSelectLabel3());
 
-                    Timer timer3 = new Timer(1000, event3 -> {
+                    Timer timer3 = new Timer(500, event3 -> {
 
                         Coordinate coordinate;
                         while (true) {
