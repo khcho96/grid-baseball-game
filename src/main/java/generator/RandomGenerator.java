@@ -17,13 +17,4 @@ public final class RandomGenerator {
 
         return coordinate;
     }
-
-    public static List<Integer> generateCoordinate(Size size) {
-        Random random = new Random();
-        List<Integer> coordinate = new ArrayList<>();
-        coordinate.add(random.nextInt(size.getSize()));
-        coordinate.add(random.nextInt(size.getSize()));
-
-        return coordinate;
-    }
 }
