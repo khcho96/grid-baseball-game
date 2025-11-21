@@ -9,6 +9,7 @@ import util.NumberConverter;
 
 public final class Size {
 
+    private static final String NUMBER_FORMAT = "\\d+";
     private final int size;
 
     private Size(String sizeInput) {
@@ -23,7 +24,7 @@ public final class Size {
     }
 
     private void validateNumber(String size) {
-        if (!size.matches("\\d+")) {
+        if (!size.matches(NUMBER_FORMAT)) {
             throw new IllegalArgumentException(NUMBER_FORMAT_ERROR.getErrorMessage());
         }
     }

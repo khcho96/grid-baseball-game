@@ -1,5 +1,6 @@
 package view.mode.single;
 
+import constant.Constant;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.JButton;
@@ -97,7 +98,7 @@ public class SingleGameEventSetter {
         button.setForeground(Color.BLUE);
         gameStatePanel.increasePitchesCount();
 
-        if (result.equals("Out!⚾")) {
+        if (result.equals(Constant.OUT_MESSAGE)) {
             button.setForeground(Color.RED);
             gameStatePanel.increaseOutCount();
         }

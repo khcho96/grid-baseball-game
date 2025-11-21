@@ -1,6 +1,7 @@
 package view.mode.battle;
 
 import communicator.EventCommunicator;
+import constant.Constant;
 import domain.vo.Coordinate;
 import dto.SizeDto;
 import java.awt.Color;
@@ -106,7 +107,6 @@ public class BattleGameEventSetter {
 
                         Coordinate coordinate;
                         while (true) {
-//                            List<Integer> oldCoordinate = RandomGenerator.generateCoordinate(Size.newInstance(String.valueOf(size.size())));
                             coordinate = eventCommunicator.getSmartCoordinate();
                             if (!battleGameComputerStatePanel.isSelected(coordinate)) {
                                 battleGameComputerStatePanel.addSelectedButton(coordinate);
@@ -114,9 +114,6 @@ public class BattleGameEventSetter {
                             }
                         }
 
-//                        int randomX = oldCoordinate.get(0);
-//                        int randomY = oldCoordinate.get(1);
-//                        String computerResult = eventCommunicator.doRandomlyClickButton(oldCoordinate);
                         String computerResult = eventCommunicator.doSmartClickButton(coordinate);
 
                         JButton selectedButton = battleGameComputerGridPanel.getButtons().get(coordinate.getX()).get(coordinate.getY());
@@ -169,8 +166,8 @@ public class BattleGameEventSetter {
 
             eventCommunicator.clickBattleGameComputerGridButton(x, y);
             button.setBackground(new Color(251, 192, 192));
-            button.setOpaque(true); // 배경색 칠할 수 있게
-            button.setContentAreaFilled(true); // 기본 배경 그리기 허용
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
             battleGameComputerStatePanel.increaseSelectedOutCount();
 
             for (ActionListener actionListener : button.getActionListeners()) {
@@ -189,7 +186,7 @@ public class BattleGameEventSetter {
                     battleGameMainStatePanel.setVisibleTrue(battleGameMainStatePanel.getUserTurnIcon(), battleGameMainStatePanel.getUserSelectLabel());
                     battleGameUserGridPanel.setClickable(true);
                 });
-                timer.setRepeats(false); // 한 번만 실행
+                timer.setRepeats(false);
                 timer.start();
             }
         });
@@ -207,7 +204,7 @@ public class BattleGameEventSetter {
         button.setForeground(Color.BLUE);
         battleGameUserStatePanel.increasePitchesCount();
 
-        if (result.equals("Out!⚾")) {
+        if (result.equals(Constant.OUT_MESSAGE)) {
             button.setForeground(Color.RED);
                 battleGameUserStatePanel.increaseOutCount();
         }
@@ -227,7 +224,7 @@ public class BattleGameEventSetter {
         button.setForeground(Color.BLUE);
         battleGameComputerStatePanel.increasePitchesCount();
 
-        if (result.equals("Out!⚾")) {
+        if (result.equals(Constant.OUT_MESSAGE)) {
             button.setForeground(Color.RED);
             battleGameComputerStatePanel.increaseOutCount();
         }

@@ -1,5 +1,6 @@
 package domain;
 
+import constant.Constant;
 import java.util.ArrayList;
 import java.util.List;
 import domain.vo.Size;
@@ -27,11 +28,11 @@ public class GridButtons {
     public String computeEventResult(int x, int y, OutZone outZone) {
         GridButton clickedButton = gridButtons.get(x).get(y);
         if (clickedButton.isOut(outZone)) {
-            return "Out!⚾";
+            return Constant.OUT_MESSAGE;
         }
 
-        String strikeCount = "<html><span style='color:#D2A641;'>" + computeStrikeCount(x, y, outZone) + "S </span>";
-        String ballCount = "<span style='color:#377E22;'>" + computeBallCount(x, y, outZone) + "B</span></html>";
+        String strikeCount = String.format(Constant.STRIKE_MESSAGE, computeStrikeCount(x, y, outZone));
+        String ballCount = String.format(Constant.BALL_MESSAGE, computeBallCount(x, y, outZone));
 
         return strikeCount + ballCount;
     }

@@ -1,5 +1,6 @@
 package service;
 
+import constant.Constant;
 import domain.GridButtons;
 import domain.OutZone;
 import domain.SmartComputer;
@@ -21,17 +22,17 @@ public class BattleGameService {
     private SmartComputer smartComputer;
 
     public SizeDto setInitGame() {
-        size = Size.newInstance("5");
+        size = Size.newInstance(Constant.INITIAL_SIZE);
         userGridButtons = GridButtons.from(size);
         computerGridButtons = GridButtons.from(size);
         outCoordinates = new ArrayList<>();
         setUserOutZones();
-        return SizeDto.newInstance(Integer.parseInt("5"));
+        return SizeDto.newInstance(Integer.parseInt(Constant.INITIAL_SIZE));
     }
 
     private void setUserOutZones() {
         List<List<Integer>> outCoordinates = new ArrayList<>();
-        while (outCoordinates.size() < 3) {
+        while (outCoordinates.size() < Constant.MAX_OUT_COUNT) {
             List<Integer> outCoordinate = RandomGenerator.generateOutZoneCoordinate(size);
             if (!outCoordinates.contains(outCoordinate)) {
                 outCoordinates.add(outCoordinate);
@@ -46,7 +47,7 @@ public class BattleGameService {
 
     public void handleComputerGridButtonEvent(int x, int y) {
         outCoordinates.add(List.of(x, y));
-        if (outCoordinates.size() == 3) {
+        if (outCoordinates.size() == Constant.MAX_OUT_COUNT) {
             computerOutZone = OutZone.of(outCoordinates);
             smartComputer = new SmartComputer(size.getSize(), computerOutZone);
         }
@@ -65,10 +66,6 @@ public class BattleGameService {
         setUserOutZones();
         outCoordinates = new ArrayList<>();
         return SizeDto.newInstance(size.getSize());
-    }
-
-    public String computeRandomClickResult(List<Integer> coordinate) {
-        return computerGridButtons.computeEventResult(coordinate.get(0), coordinate.get(1), computerOutZone);
     }
 
     public Coordinate computeSmartCoordinate() {

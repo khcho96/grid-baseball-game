@@ -2,7 +2,6 @@ package controller;
 
 import domain.vo.Coordinate;
 import dto.SizeDto;
-import java.util.List;
 import service.BattleGameService;
 import view.mode.battle.BattleGameView;
 
@@ -38,10 +37,6 @@ public class BattleGameController {
 
     public void transferComputerGridButtonEvent(int x, int y) {
         gameService.handleComputerGridButtonEvent(x, y);
-    }
-
-    public String doRandomlyClickButton(List<Integer> coordinate) {
-        return gameService.computeRandomClickResult(coordinate);
     }
 
     public SizeDto transferSizeInputEvent(String sizeInput) {

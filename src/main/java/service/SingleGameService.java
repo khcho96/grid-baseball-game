@@ -1,5 +1,6 @@
 package service;
 
+import constant.Constant;
 import java.util.ArrayList;
 import java.util.List;
 import domain.GridButtons;
@@ -15,15 +16,15 @@ public class SingleGameService {
     private Size size;
 
     public SizeDto setInitGame() {
-        size = Size.newInstance("5");
+        size = Size.newInstance(Constant.INITIAL_SIZE);
         gridButtons = GridButtons.from(size);
         setOutZones();
-        return SizeDto.newInstance(Integer.parseInt("5"));
+        return SizeDto.newInstance(Integer.parseInt(Constant.INITIAL_SIZE));
     }
 
     private void setOutZones() {
         List<List<Integer>> outCoordinates = new ArrayList<>();
-        while (outCoordinates.size() < 3) {
+        while (outCoordinates.size() < Constant.MAX_OUT_COUNT) {
             List<Integer> outCoordinate = RandomGenerator.generateOutZoneCoordinate(size);
             if (!outCoordinates.contains(outCoordinate)) {
                 outCoordinates.add(outCoordinate);

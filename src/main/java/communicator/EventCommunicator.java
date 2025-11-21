@@ -5,7 +5,6 @@ import controller.BattleGameController;
 import controller.SingleGameController;
 import domain.vo.Coordinate;
 import dto.SizeDto;
-import java.util.List;
 
 public class EventCommunicator {
 
@@ -39,10 +38,6 @@ public class EventCommunicator {
 
     public void clickBattleGameComputerGridButton(int x, int y) {
         battleGameController.transferComputerGridButtonEvent(x, y);
-    }
-
-    public String doRandomlyClickButton(List<Integer> coordinate) {
-        return battleGameController.doRandomlyClickButton(coordinate);
     }
 
     public SizeDto inputSizeInTextForSingleGame(String sizeInput) {
