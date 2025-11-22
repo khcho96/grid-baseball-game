@@ -16,10 +16,10 @@
 <img width="700" height="500" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/00c68305-fdea-4657-9bc8-29b9dd4b5c6d" />
 
 #### 👤 싱글 모드 플레이 화면
-<img width="700" height="500" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/b3f50ed3-fc6e-4759-9cf2-8ba45f65ba9b" />
+<img width="700" height="500" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/933386d1-9803-4c18-99ee-f726241834c8" />
 
 #### 🆚 배틀 모드 플레이 화면
-<img width="700" height="500" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/933386d1-9803-4c18-99ee-f726241834c8" />
+<img width="700" height="500" alt="스크린샷 2025-11-20 17 05 31" src="https://github.com/user-attachments/assets/b3f50ed3-fc6e-4759-9cf2-8ba45f65ba9b" />
 
 ### 🕹️ 게임 규칙 & 플레이 방식
 #### 공통
