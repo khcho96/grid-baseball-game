@@ -160,6 +160,7 @@ gradlew.bat run
   <img width="400" height="400" alt="스크린샷 2025-11-22 15 27 29" src="https://github.com/user-attachments/assets/590b605d-0c8f-4f22-b28b-5a4e17f4d781" />
 
 - 예2) 버튼 선택으로 0S 2B이라는 힌트를 얻었다면 대각선 4개의 좌표는 아웃 지점 후보가 되므로 이 중 하나를 다음 선택으로 결정한다. 이때 가장 많은 숨겨진 인접 정보가 있는 좌표(빨간 글씨)를 선택한다.
+
   <img width="400" height="400" alt="스크린샷 2025-11-22 15 27 57" src="https://github.com/user-attachments/assets/2e396553-c82f-422f-b428-cd05b5814b31" />
 
 - 예3) 5x5 격자 보드에서 어떤 좌표를 선택해 0S 0B이라는 힌트를 얻은 상황에서 인접 정보가 가장 많은 좌표(빨간 글씨)를 선택한다.
