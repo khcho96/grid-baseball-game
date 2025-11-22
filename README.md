@@ -158,10 +158,13 @@ gradlew.bat run
 4. 최대 개수를 가진 좌표가 여러개라면 그 중 하나를 랜덤으로 선택한다.
 - 예1) 3x3 격자 보드에서 처음 선택할 때 가장 많은 인접한 정보를 가진 좌표(빨간 글씨)를 선택한다.
 <img width="400" height="400" alt="스크린샷 2025-11-22 15 27 29" src="https://github.com/user-attachments/assets/590b605d-0c8f-4f22-b28b-5a4e17f4d781" />
+
 - 예2) 버튼 선택으로 0S 2B이라는 힌트를 얻었다면 대각선 4개의 좌표는 아웃 지점 후보가 되므로 이 중 하나를 다음 선택으로 결정한다. 이때 가장 많은 숨겨진 인접 정보가 있는 좌표(빨간 글씨)를 선택한다.
 <img width="400" height="400" alt="스크린샷 2025-11-22 15 27 57" src="https://github.com/user-attachments/assets/2e396553-c82f-422f-b428-cd05b5814b31" />
+
 - 예3) 5x5 격자 보드에서 어떤 좌표를 선택해 0S 0B이라는 힌트를 얻은 상황에서 인접 정보가 가장 많은 좌표(빨간 글씨)를 선택한다.
 <img width="400" height="400" alt="스크린샷 2025-11-22 15 29 14" src="https://github.com/user-attachments/assets/6bb2c7e1-d28f-4a7c-b764-0e5041f764c4" />
+
 - 예4) 4x4 격자 보드에서 처음 선택할 때 가장 많은 인접한 정보를 가진 좌표(빨간 글씨)는 총 4개이고, 그 중 하나를 랜덤으로 선택한다.
   <img width="400" height="400" alt="스크린샷 2025-11-22 15 43 30" src="https://github.com/user-attachments/assets/d40a2e8f-91dc-4e2b-931d-239071acd90d" />
 
@@ -171,10 +174,12 @@ gradlew.bat run
 3. 좌표 선택으로 아웃을 찾았다면 해당 아웃의 나머지 후보들은 절대 아웃 지점이 될 수 없으므로 모든 선택 리스트에서 제거한다.
 - 예1) 0S 1B이라는 힌트를 얻었다면 상하좌우 좌표는 모든 선택 리스트에서 제거하고 대각선 좌표 4개는 아웃 후보 리스트에 추가한다.
 <img width="400" height="400" alt="스크린샷 2025-11-22 15 52 14" src="https://github.com/user-attachments/assets/5c4906c2-233a-4173-9bd1-d41f4c946736" />
+
 - 예2) 아웃 후보 리스트를 만든 후 그 중 하나의 좌표를 선택해 아웃을 찾았다면 나머지 아웃 후보 좌표는 모든 리스트에서 삭제한다.
   - 1번째 선택 -> **0S 1B**
     - 상하좌우 좌표는 모든 선택지에서 제외하고, 대각선 좌표는 아웃 후보 리스트에 추가한다.
     <img width="400" height="400" alt="스크린샷 2025-11-22 16 16 27" src="https://github.com/user-attachments/assets/0fb042c3-3e8d-4d1b-929b-0f40a49adc19" />
+  
   - 2번째 선택 -> **Out**
     - 선택한 좌표가 아웃이므로 해당 아웃의 후보였던 나머지 3개의 좌표는 모든 선택지에서 제거한다.
       <img width="400" height="400" alt="스크린샷 2025-11-22 16 16 32" src="https://github.com/user-attachments/assets/0dbfdf50-fd7f-4e88-a23a-6018320d5449" />
