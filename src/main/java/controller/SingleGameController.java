@@ -25,7 +25,7 @@ public class SingleGameController {
         new SingleGameView(size);
     }
 
-    public void restartSingleGame() {
+    public void clickRestartButton() {
         SizeDto size = gameService.handleRestartGame();
         new SingleGameView(size);
     }
@@ -35,6 +35,7 @@ public class SingleGameController {
     }
 
     public SizeDto transferSizeInputEvent(String sizeInput) {
+        clickRestartButton();
         return gameService.handleSizeInputEvent(sizeInput);
     }
 }
