@@ -49,7 +49,7 @@ public class EventCommunicator {
     }
 
     public void clickSingleGameRestartButton() {
-        singleGameController.restartSingleGame();
+        singleGameController.clickRestartButton();
     }
 
     public void clickBattleGameRestartButton() {
